@@ -19,6 +19,9 @@
 
 html {
     scroll-behavior: smooth;
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -26,6 +29,8 @@ body {
     line-height: 1.6;
     color: var(--dark-color);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
@@ -69,7 +74,8 @@ body {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: clamp(1rem, 3vw, 2rem);
+    align-items: center;
 }
 
 .nav-menu a {
@@ -78,6 +84,8 @@ body {
     font-weight: 500;
     transition: var(--transition);
     position: relative;
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+    padding: 8px 12px;
 }
 
 .nav-menu .btn-instagram {
@@ -179,15 +187,17 @@ body {
 }
 
 .hero-content h1 {
-    font-size: 4rem;
+    font-size: clamp(2rem, 8vw, 4rem);
     margin-bottom: 1rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    line-height: 1.2;
 }
 
 .hero-content p {
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 3vw, 1.5rem);
     margin-bottom: 2rem;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    line-height: 1.4;
 }
 
 .scroll-indicator {
@@ -196,8 +206,9 @@ body {
     left: 50%;
     transform: translateX(-50%);
     color: var(--light-color);
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 4vw, 2rem);
     animation: bounce 2s infinite;
+    z-index: 2;
 }
 
 @keyframes bounce {
@@ -226,14 +237,19 @@ body {
 /* Buttons */
 .btn {
     display: inline-block;
-    padding: 12px 30px;
+    padding: 14px 32px;
     text-decoration: none;
     border-radius: 50px;
     font-weight: 600;
     transition: var(--transition);
     border: none;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
 }
 
 .btn-primary {
@@ -284,14 +300,14 @@ body {
 }
 
 .about-text h2 {
-    font-size: 2.5rem;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
     color: var(--secondary-color);
     margin-bottom: 1rem;
 }
 
 .about-text .highlight {
     color: var(--primary-color);
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
     font-weight: 600;
     margin-bottom: 1rem;
 }
@@ -300,6 +316,7 @@ body {
     margin-bottom: 1rem;
     color: var(--gray-color);
     line-height: 1.8;
+    font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
 .stats {
@@ -341,17 +358,19 @@ body {
 }
 
 .section-title {
-    font-size: 2.5rem;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
     text-align: center;
     color: var(--secondary-color);
     margin-bottom: 10px;
+    line-height: 1.3;
 }
 
 .section-subtitle {
     text-align: center;
     color: var(--gray-color);
     margin-bottom: 40px;
-    font-size: 1.1rem;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    padding: 0 15px;
 }
 
 .gallery-filters {
@@ -371,6 +390,9 @@ body {
     cursor: pointer;
     transition: var(--transition);
     font-weight: 600;
+    min-height: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .filter-btn:hover,
@@ -394,6 +416,14 @@ body {
     cursor: pointer;
     transition: var(--transition);
     aspect-ratio: 1;
+    min-height: 200px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .gallery-item:hover {
@@ -969,7 +999,62 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 968px) {
+
+/* Tablet Grande (1024px - 1200px) */
+@media (max-width: 1200px) {
+    .container {
+        padding: 0 30px;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    .productos-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 25px;
+    }
+    
+    .nav-menu {
+        gap: 1.5rem;
+    }
+    
+    .about-content {
+        gap: 30px;
+    }
+    
+    .image-placeholder {
+        width: 350px;
+        height: 350px;
+    }
+    
+    .image-placeholder i {
+        font-size: 170px;
+    }
+    
+    .stats {
+        gap: 15px;
+    }
+    
+    .gallery-grid,
+    .productos-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+/* Tablet Pequeña y Móvil Grande (600px - 768px) */
+@media (max-width: 768px) {
     .nav-toggle {
         display: flex;
     }
@@ -985,57 +1070,90 @@ body {
         align-items: center;
         justify-content: center;
         transition: var(--transition);
+        gap: 2rem;
+        z-index: 999;
+    }
+    
+    .nav-menu li {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .nav-menu a {
+        display: block;
+        padding: 15px 20px;
+        font-size: 1.1rem;
     }
 
     .nav-menu.active {
         right: 0;
     }
-
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-
-    .hero-content p {
-        font-size: 1.2rem;
+    
+    .hero {
+        height: 80vh;
     }
 
     .about-content,
     .contact-content {
         grid-template-columns: 1fr;
+        gap: 40px;
     }
 
     .image-placeholder {
-        width: 300px;
-        height: 300px;
+        width: 280px;
+        height: 280px;
+        margin: 0 auto;
     }
 
     .image-placeholder i {
-        font-size: 150px;
+        font-size: 140px;
     }
 
     .stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .stat-item {
+        padding: 15px 10px;
+    }
+    
+    .stat-item h3 {
+        font-size: 1.5rem;
     }
 
     .gallery-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .gallery-filters {
+        gap: 10px;
+    }
+    
+    .filter-btn {
+        padding: 8px 18px;
+        font-size: 0.9rem;
     }
 
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
-
+    .services-grid,
     .productos-grid {
         grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .service-card,
+    .producto-card {
+        padding: 30px 20px;
     }
 
     .carrito-content {
-        padding: 20px;
+        padding: 25px;
         width: 95%;
     }
 
     .notification {
-        right: -300px;
+        right: -320px;
         min-width: 200px;
         max-width: 90%;
         padding: 12px 20px;
@@ -1047,25 +1165,214 @@ body {
     }
 
     .instagram-embed-wrapper {
-        padding: 20px;
+        padding: 20px 15px;
         margin-bottom: 30px;
+    }
+    
+    .contact-info {
+        gap: 20px;
+    }
+    
+    .info-item {
+        flex-direction: row;
+        align-items: center;
     }
 }
 
+/* Móvil (480px - 600px) */
 @media (max-width: 600px) {
-    .hero-content h1 {
-        font-size: 2rem;
+    .container {
+        padding: 0 15px;
+    }
+    
+    body {
+        font-size: 15px;
+    }
+    
+    .navbar {
+        padding: 0.8rem 0;
+    }
+    
+    .nav-brand {
+        font-size: 1.2rem;
+    }
+    
+    .hero {
+        height: 70vh;
+    }
+    
+    .hero-content {
+        padding: 0 15px;
+    }
+    
+    section {
+        padding: 60px 0 !important;
+    }
+    
+    .about-section,
+    .gallery-section,
+    .tienda-section,
+    .services-section,
+    .contact-section {
+        padding: 60px 0;
     }
 
-    .hero-content p {
-        font-size: 1rem;
+    .image-placeholder {
+        width: 220px;
+        height: 220px;
     }
 
-    .section-title {
-        font-size: 2rem;
+    .image-placeholder i {
+        font-size: 110px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .stat-item {
+        padding: 20px;
     }
 
     .gallery-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .gallery-filters {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .filter-btn {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .service-card,
+    .producto-card {
+        padding: 25px 15px;
+    }
+    
+    .service-icon,
+    .producto-image {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .service-icon i,
+    .producto-image i {
+        font-size: 1.8rem;
+    }
+    
+    .contact-form {
+        padding: 25px 20px;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 12px;
+        font-size: 15px;
+    }
+    
+    .social-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .carrito-content {
+        padding: 20px 15px;
+    }
+    
+    .carrito-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .instagram-embed-wrapper {
+        padding: 15px;
+        font-size: 0.95rem;
+    }
+    
+    .modal-close {
+        font-size: 2.5rem;
+        right: 20px;
+        top: 10px;
+    }
+}
+
+/* Móvil Pequeño (menos de 400px) */
+@media (max-width: 400px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    body {
+        font-size: 14px;
+    }
+    
+    .nav-brand span {
+        font-size: 1rem;
+    }
+    
+    .hero-content {
+        padding: 0 10px;
+    }
+    
+    .btn {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+    }
+    
+    .image-placeholder {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .image-placeholder i {
+        font-size: 90px;
+    }
+    
+    .stat-item h3 {
+        font-size: 1.5rem;
+    }
+    
+    .stat-item p {
+        font-size: 0.85rem;
+    }
+    
+    .service-card h3,
+    .producto-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .contact-form {
+        padding: 20px 15px;
+    }
+    
+    .notification {
+        font-size: 0.85rem;
+        padding: 10px 15px;
+    }
+}
+
+/* Landscape móvil */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        height: 100vh;
+        min-height: 400px;
+    }
+    
+    .nav-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: auto;
+        padding: 20px;
+    }
+    
+    .nav-menu li {
+        width: auto;
     }
 }
