@@ -53,7 +53,7 @@
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#about">Sobre Mí</a></li>
                 <li><a href="#galeria">Galería</a></li>
-                <li><a href="#tienda">Tienda</a></li>
+                <li><a href="#" id="openTienda">Tienda</a></li>
                 <li><a href="#servicios">Servicios</a></li>
                 <li><a href="#contacto">Contacto</a></li>
                 <li><a href="https://www.instagram.com/boceto.juangiraldo" target="_blank" rel="noopener noreferrer" class="btn-instagram"><i class="fab fa-instagram"></i> Instagram</a></li>
@@ -212,75 +212,194 @@
         </div>
     </section>
 
-    <!-- Tienda Section -->
-    <section id="tienda" class="tienda-section">
-        <div class="container">
-            <h2 class="section-title">Tienda</h2>
-            <p class="section-subtitle">Productos y servicios disponibles</p>
+    <!-- Overlay de Tienda Moderna -->
+    <div id="tiendaOverlay" class="tienda-overlay">
+        <div class="tienda-container">
+            <button class="tienda-close" id="closeTienda">
+                <i class="fas fa-times"></i>
+            </button>
             
-            <div class="productos-grid">
-                <div class="producto-card">
-                    <div class="producto-image">
-                        <i class="fas fa-gift"></i>
+            <div class="tienda-header">
+                <h2 class="tienda-title">🛍️ Tienda Exclusiva</h2>
+                <p class="tienda-subtitle">Productos y servicios premium para ti</p>
+            </div>
+            
+            <div class="tienda-categorias">
+                <button class="categoria-btn active" data-categoria="todos">Todos</button>
+                <button class="categoria-btn" data-categoria="bonos">Bonos</button>
+                <button class="categoria-btn" data-categoria="productos">Productos</button>
+                <button class="categoria-btn" data-categoria="servicios">Servicios</button>
+            </div>
+            
+            <div class="tienda-productos-grid">
+                <!-- Bono Regalo -->
+                <div class="producto-card-modern" data-categoria="bonos">
+                    <div class="producto-badge">Popular</div>
+                    <div class="producto-image-modern">
+                        <div class="producto-icon-wrapper">
+                            <i class="fas fa-gift"></i>
+                        </div>
                     </div>
-                    <h3>Bono Regalo 1 Sesión</h3>
-                    <p class="precio">€150</p>
-                    <p class="descripcion">Regala una sesión de tatuaje. Válido por 6 meses.</p>
-                    <button class="btn btn-primary btn-comprar">Comprar</button>
+                    <div class="producto-content">
+                        <h3>Bono Regalo 1 Sesión</h3>
+                        <p class="producto-descripcion">Regala una sesión de tatuaje profesional. Válido por 6 meses.</p>
+                        <div class="producto-footer">
+                            <span class="producto-precio">€150</span>
+                            <button class="btn-comprar-modern">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="producto-card">
-                    <div class="producto-image">
-                        <i class="fas fa-spray-can"></i>
+                <!-- Kit Post-Tatuaje -->
+                <div class="producto-card-modern" data-categoria="productos">
+                    <div class="producto-badge bestseller">Bestseller</div>
+                    <div class="producto-image-modern">
+                        <div class="producto-icon-wrapper">
+                            <i class="fas fa-spray-can"></i>
+                        </div>
                     </div>
-                    <h3>Kit Cuidado Post-Tatuaje</h3>
-                    <p class="precio">€35</p>
-                    <p class="descripcion">Todo lo necesario para cuidar tu nuevo tatuaje.</p>
-                    <button class="btn btn-primary btn-comprar">Comprar</button>
+                    <div class="producto-content">
+                        <h3>Kit Cuidado Post-Tatuaje</h3>
+                        <p class="producto-descripcion">Todo lo necesario para cuidar tu nuevo tatuaje perfectamente.</p>
+                        <div class="producto-footer">
+                            <span class="producto-precio">€35</span>
+                            <button class="btn-comprar-modern">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="producto-card">
-                    <div class="producto-image">
-                        <i class="fas fa-palette"></i>
+                <!-- Diseño Personalizado -->
+                <div class="producto-card-modern" data-categoria="servicios">
+                    <div class="producto-badge exclusive">Exclusivo</div>
+                    <div class="producto-image-modern">
+                        <div class="producto-icon-wrapper">
+                            <i class="fas fa-palette"></i>
+                        </div>
                     </div>
-                    <h3>Diseño Personalizado</h3>
-                    <p class="precio">€80</p>
-                    <p class="descripcion">Diseño único creado especialmente para ti.</p>
-                    <button class="btn btn-primary btn-comprar">Comprar</button>
+                    <div class="producto-content">
+                        <h3>Diseño Personalizado</h3>
+                        <p class="producto-descripcion">Diseño único creado especialmente para ti por el artista.</p>
+                        <div class="producto-footer">
+                            <span class="producto-precio">€80</span>
+                            <button class="btn-comprar-modern">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="producto-card">
-                    <div class="producto-image">
-                        <i class="fas fa-tshirt"></i>
+                <!-- Merchandise -->
+                <div class="producto-card-modern" data-categoria="productos">
+                    <div class="producto-image-modern">
+                        <div class="producto-icon-wrapper">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
                     </div>
-                    <h3>Merchandise</h3>
-                    <p class="precio">€25</p>
-                    <p class="descripcion">Camisetas y accesorios del estudio.</p>
-                    <button class="btn btn-primary btn-comprar">Comprar</button>
+                    <div class="producto-content">
+                        <h3>Merchandise Oficial</h3>
+                        <p class="producto-descripcion">Camisetas, gorras y accesorios exclusivos del estudio.</p>
+                        <div class="producto-footer">
+                            <span class="producto-precio">€25</span>
+                            <button class="btn-comprar-modern">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="producto-card">
-                    <div class="producto-image">
-                        <i class="fas fa-calendar-check"></i>
+                <!-- Consulta Diseño -->
+                <div class="producto-card-modern" data-categoria="servicios">
+                    <div class="producto-image-modern">
+                        <div class="producto-icon-wrapper">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
                     </div>
-                    <h3>Consulta Diseño</h3>
-                    <p class="precio">€40</p>
-                    <p class="descripcion">1 hora de consulta para planificar tu tatuaje.</p>
-                    <button class="btn btn-primary btn-comprar">Comprar</button>
+                    <div class="producto-content">
+                        <h3>Consulta de Diseño</h3>
+                        <p class="producto-descripcion">1 hora de consulta para planificar tu tatuaje perfecto.</p>
+                        <div class="producto-footer">
+                            <span class="producto-precio">€40</span>
+                            <button class="btn-comprar-modern">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="producto-card">
-                    <div class="producto-image">
-                        <i class="fas fa-star"></i>
+                <!-- Sesión Flash -->
+                <div class="producto-card-modern" data-categoria="servicios">
+                    <div class="producto-badge hot">Hot</div>
+                    <div class="producto-image-modern">
+                        <div class="producto-icon-wrapper">
+                            <i class="fas fa-star"></i>
+                        </div>
                     </div>
-                    <h3>Sesión Flash</h3>
-                    <p class="precio">€100</p>
-                    <p class="descripcion">Tatuajes pre-diseñados de tamaño pequeño.</p>
-                    <button class="btn btn-primary btn-comprar">Comprar</button>
+                    <div class="producto-content">
+                        <h3>Sesión Flash</h3>
+                        <p class="producto-descripcion">Tatuajes pre-diseñados de tamaño pequeño, rápidos y perfectos.</p>
+                        <div class="producto-footer">
+                            <span class="producto-precio">€100</span>
+                            <button class="btn-comprar-modern">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Retoque Tatuaje -->
+                <div class="producto-card-modern" data-categoria="servicios">
+                    <div class="producto-image-modern">
+                        <div class="producto-icon-wrapper">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                    </div>
+                    <div class="producto-content">
+                        <h3>Retoque de Tatuaje</h3>
+                        <p class="producto-descripcion">Restaura el color y nitidez de tu tatuaje antiguo.</p>
+                        <div class="producto-footer">
+                            <span class="producto-precio">€60</span>
+                            <button class="btn-comprar-modern">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bono 3 Sesiones -->
+                <div class="producto-card-modern" data-categoria="bonos">
+                    <div class="producto-badge save">Ahorra 15%</div>
+                    <div class="producto-image-modern">
+                        <div class="producto-icon-wrapper">
+                            <i class="fas fa-gifts"></i>
+                        </div>
+                    </div>
+                    <div class="producto-content">
+                        <h3>Bono 3 Sesiones</h3>
+                        <p class="producto-descripcion">Pack de 3 sesiones con descuento especial. Válido 1 año.</p>
+                        <div class="producto-footer">
+                            <span class="producto-precio-antes">€450</span>
+                            <span class="producto-precio">€380</span>
+                            <button class="btn-comprar-modern">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Services Section -->
     <section id="servicios" class="services-section">

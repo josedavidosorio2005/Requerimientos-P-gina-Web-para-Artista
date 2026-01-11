@@ -644,6 +644,97 @@ document.addEventListener('DOMContentLoaded', () => {
     // Animaciones
     initScrollAnimations();
 
+    // === TIENDA OVERLAY ===
+    const tiendaOverlay = document.getElementById('tiendaOverlay');
+    const openTienda = document.getElementById('openTienda');
+    const closeTienda = document.getElementById('closeTienda');
+    
+    // Abrir tienda
+    if (openTienda) {
+        openTienda.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (tiendaOverlay) {
+                tiendaOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    }
+    
+    // Cerrar tienda
+    if (closeTienda) {
+        closeTienda.addEventListener('click', () => {
+            if (tiendaOverlay) {
+                tiendaOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+    
+    // Cerrar al hacer click fuera
+    if (tiendaOverlay) {
+        tiendaOverlay.addEventListener('click', (e) => {
+            if (e.target === tiendaOverlay) {
+                tiendaOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+    
+    // Cerrar con ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && tiendaOverlay && tiendaOverlay.classList.contains('active')) {
+            tiendaOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Filtros de categoría
+    const categoriaBtns = document.querySelectorAll('.categoria-btn');
+    const productosCards = document.querySelectorAll('.producto-card-modern');
+    
+    categoriaBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const categoria = btn.dataset.categoria;
+            
+            // Actualizar botones activos
+            categoriaBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Filtrar productos
+            productosCards.forEach(card => {
+                if (categoria === 'todos' || card.dataset.categoria === categoria) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeInGrid 0.6s ease';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    // Botones de compra en tienda moderna
+    document.querySelectorAll('.btn-comprar-modern').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const card = e.target.closest('.producto-card-modern');
+            if (!card) return;
+
+            const producto = {
+                nombre: card.querySelector('h3').textContent,
+                precio: card.querySelector('.producto-precio').textContent
+            };
+            cart.add(producto);
+            
+            // Efecto visual en el botón
+            btn.innerHTML = '<i class="fas fa-check"></i> ¡Añadido!';
+            btn.style.background = 'linear-gradient(135deg, #06ffa5, #00d4ff)';
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Añadir';
+                btn.style.background = '';
+            }, 2000);
+        });
+    });
+
     // Botón carrito
     const carritoIcon = document.querySelector('.carrito-icon');
     if (carritoIcon) {
@@ -654,7 +745,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Botones de compra
+    // Botones de compra antiguos (por si acaso)
     document.querySelectorAll('.btn-comprar').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const card = e.target.closest('.producto-card');

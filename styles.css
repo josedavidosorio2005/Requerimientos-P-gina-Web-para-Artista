@@ -1760,3 +1760,356 @@ Los dibujos tendrán un aspecto profesional de galería de arte, ideal para most
         width: calc(100% - 40px);
     }
 }
+/* ===================================
+   TIENDA OVERLAY MODERNA
+   =================================== */
+
+.tienda-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    overflow-y: auto;
+}
+
+.tienda-overlay.active {
+    display: block;
+    opacity: 1;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.tienda-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    position: relative;
+}
+
+.tienda-close {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    background: linear-gradient(135deg, #ff006e, #f72585);
+    color: #fff;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 5px 20px rgba(255, 0, 110, 0.4);
+    z-index: 10000;
+}
+
+.tienda-close:hover {
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 10px 40px rgba(255, 0, 110, 0.6);
+}
+
+.tienda-header {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: slideDown 0.6s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tienda-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: #fff;
+    margin-bottom: 15px;
+    font-weight: 900;
+    text-shadow: 
+        0 0 30px rgba(255, 0, 110, 0.6),
+        0 5px 20px rgba(0, 0, 0, 0.5);
+    letter-spacing: -1px;
+}
+
+.tienda-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.tienda-categorias {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 50px;
+    animation: slideUp 0.6s ease 0.2s both;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.categoria-btn {
+    padding: 12px 30px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.categoria-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+.categoria-btn.active {
+    background: linear-gradient(135deg, #ff006e, #f72585);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(255, 0, 110, 0.5);
+    transform: translateY(-3px);
+}
+
+.tienda-productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    animation: fadeInGrid 0.8s ease 0.4s both;
+}
+
+@keyframes fadeInGrid {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.producto-card-modern {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    overflow: hidden;
+    transition: var(--transition);
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.producto-card-modern:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: rgba(255, 0, 110, 0.5);
+    box-shadow: 0 20px 60px rgba(255, 0, 110, 0.4);
+}
+
+.producto-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 10;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.producto-badge {
+    background: linear-gradient(135deg, #ff006e, #f72585);
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(255, 0, 110, 0.4);
+}
+
+.producto-badge.bestseller {
+    background: linear-gradient(135deg, #ffd60a, #ff9e00);
+    box-shadow: 0 5px 15px rgba(255, 214, 10, 0.4);
+}
+
+.producto-badge.exclusive {
+    background: linear-gradient(135deg, #7209b7, #3a0ca3);
+    box-shadow: 0 5px 15px rgba(114, 9, 183, 0.4);
+}
+
+.producto-badge.hot {
+    background: linear-gradient(135deg, #ff006e, #ff4500);
+    box-shadow: 0 5px 15px rgba(255, 0, 110, 0.4);
+}
+
+.producto-badge.save {
+    background: linear-gradient(135deg, #06ffa5, #00d4ff);
+    box-shadow: 0 5px 15px rgba(6, 255, 165, 0.4);
+}
+
+.producto-image-modern {
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(114, 9, 183, 0.1));
+}
+
+.producto-icon-wrapper {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff006e, #7209b7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        0 10px 30px rgba(255, 0, 110, 0.4),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+    transition: var(--transition);
+}
+
+.producto-card-modern:hover .producto-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 
+        0 15px 40px rgba(255, 0, 110, 0.6),
+        inset 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+.producto-icon-wrapper i {
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.producto-content {
+    padding: 30px;
+}
+
+.producto-content h3 {
+    font-size: 1.4rem;
+    color: #fff;
+    margin-bottom: 15px;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.producto-descripcion {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    font-weight: 400;
+}
+
+.producto-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.producto-precio-antes {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: line-through;
+    margin-right: 10px;
+}
+
+.producto-precio {
+    font-size: 1.8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ff006e, #ffbe0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(255, 0, 110, 0.3);
+}
+
+.btn-comprar-modern {
+    padding: 12px 24px;
+    border: none;
+    background: linear-gradient(135deg, #ff006e, #f72585);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 20px rgba(255, 0, 110, 0.3);
+}
+
+.btn-comprar-modern:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 0, 110, 0.6);
+    background: linear-gradient(135deg, #f72585, #ff006e);
+}
+
+.btn-comprar-modern i {
+    font-size: 1rem;
+}
+
+/* Responsive para Tienda Overlay */
+@media (max-width: 768px) {
+    .tienda-container {
+        padding: 80px 15px 40px;
+    }
+    
+    .tienda-close {
+        top: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    .tienda-productos-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .tienda-categorias {
+        gap: 10px;
+    }
+    
+    .categoria-btn {
+        padding: 10px 20px;
+        font-size: 0.8rem;
+    }
+}
