@@ -1,0 +1,34 @@
+# Ignorar node_modules si decides usar npm en el futuro
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archivos temporales
+*.tmp
+*.temp
+*.bak
+
+# Archivos de configuración local (si los creas)
+.env
+.env.local
+config.local.js
+
+# Carpetas de build (por si decides usar algún bundler)
+dist/
+build/

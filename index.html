@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Boceto Juan Giraldo - Artista tatuador profesional especializado en realismo, tradicional, geométrico y acuarela. Más de 10 años de experiencia.">
+    <meta name="keywords" content="tatuajes, tattoo, Juan Giraldo, boceto, realismo, tatuador profesional, arte corporal">
+    <meta name="author" content="Juan Giraldo">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Boceto Juan Giraldo - Artista Tatuador Profesional">
+    <meta property="og:description" content="Arte sobre tu piel. Transformando ideas en obras maestras permanentes.">
+    <meta property="og:url" content="https://www.instagram.com/boceto.juangiraldo">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Boceto Juan Giraldo - Artista Tatuador">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    
+    <title>Boceto Juan Giraldo - Artista Tatuador Profesional</title>
+    
+    <!-- Preconnect para optimizar carga -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://www.instagram.com">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Navegación principal">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-feather-alt" aria-hidden="true"></i>
+                <span>Boceto Juan Giraldo</span>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#about">Sobre Mí</a></li>
+                <li><a href="#galeria">Galería</a></li>
+                <li><a href="#tienda">Tienda</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="https://www.instagram.com/boceto.juangiraldo" target="_blank" rel="noopener noreferrer" class="btn-instagram"><i class="fab fa-instagram"></i> Instagram</a></li>
+                <li><a href="#carrito" class="carrito-icon"><i class="fas fa-shopping-cart"></i> <span id="carritoCount">0</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="animate-fade-in">Arte Sobre Tu Piel</h1>
+            <p class="animate-fade-in-delay">Transformando ideas en obras maestras permanentes</p>
+            <a href="#contacto" class="btn btn-primary animate-fade-in-delay-2">Agenda Tu Cita</a>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h2>Sobre Mí</h2>
+                    <p class="highlight">Juan Giraldo - Artista Tatuador Profesional</p>
+                    <p>Como artista del tatuaje, mi pasión es convertir tus ideas en obras de arte permanentes que cuenten tu historia. Especializado en diversos estilos, desde realismo hasta diseños tradicionales, cada tatuaje es una pieza única creada con dedicación y profesionalismo.</p>
+                    <p><strong>Instagram:</strong> <a href="https://www.instagram.com/boceto.juangiraldo" target="_blank" rel="noopener noreferrer" style="color: #e63946;">@boceto.juangiraldo</a></p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <h3>500+</h3>
+                            <p>Clientes Satisfechos</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>10+</h3>
+                            <p>Años Experiencia</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>100%</h3>
+                            <p>Esterilización</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="galeria" class="gallery-section">
+        <div class="container">
+            <h2 class="section-title">Galería de Trabajos</h2>
+            <p class="section-subtitle">Explora algunos de mis trabajos más recientes</p>
+            <div style="text-align: center; margin-bottom: 30px;">
+                <a href="https://www.instagram.com/boceto.juangiraldo" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <i class="fab fa-instagram"></i> Ver más en Instagram @boceto.juangiraldo
+                </a>
+            </div>
+            
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="realismo">Realismo</button>
+                <button class="filter-btn" data-filter="tradicional">Tradicional</button>
+                <button class="filter-btn" data-filter="geometrico">Geométrico</button>
+                <button class="filter-btn" data-filter="acuarela">Acuarela</button>
+            </div>
+
+            <!-- Widget de Instagram incrustado -->
+            <div class="instagram-embed-wrapper">
+                <div class="instagram-embed-info">
+                    <p><i class="fab fa-instagram"></i> Sígueme en Instagram para ver mi trabajo más reciente</p>
+                </div>
+            </div>
+            
+            <div class="gallery-grid" id="galleryGrid" role="list">
+                <!-- Placeholder items con lazy loading -->
+                <article class="gallery-item" data-category="realismo" role="listitem">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-image" aria-hidden="true"></i>
+                        <p>Realismo</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <p>Estilo Realismo</p>
+                    </div>
+                </article>
+                <article class="gallery-item" data-category="tradicional" role="listitem">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-image" aria-hidden="true"></i>
+                        <p>Tradicional</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <p>Estilo Tradicional</p>
+                    </div>
+                </article>
+                <article class="gallery-item" data-category="geometrico" role="listitem">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-image" aria-hidden="true"></i>
+                        <p>Geométrico</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <p>Estilo Geométrico</p>
+                    </div>
+                </article>
+                <article class="gallery-item" data-category="acuarela" role="listitem">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-image" aria-hidden="true"></i>
+                        <p>Acuarela</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <p>Estilo Acuarela</p>
+                    </div>
+                </article>
+                <article class="gallery-item" data-category="realismo" role="listitem">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-image" aria-hidden="true"></i>
+                        <p>Realismo</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <p>Estilo Realismo</p>
+                    </div>
+                </article>
+                <article class="gallery-item" data-category="tradicional" role="listitem">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-image" aria-hidden="true"></i>
+                        <p>Tradicional</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <p>Estilo Tradicional</p>
+                    </div>
+                </article>
+                <article class="gallery-item" data-category="geometrico" role="listitem">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-image" aria-hidden="true"></i>
+                        <p>Geométrico</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <p>Estilo Geométrico</p>
+                    </div>
+                </article>
+                <article class="gallery-item" data-category="acuarela" role="listitem">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-image" aria-hidden="true"></i>
+                        <p>Acuarela</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <p>Estilo Acuarela</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tienda Section -->
+    <section id="tienda" class="tienda-section">
+        <div class="container">
+            <h2 class="section-title">Tienda</h2>
+            <p class="section-subtitle">Productos y servicios disponibles</p>
+            
+            <div class="productos-grid">
+                <div class="producto-card">
+                    <div class="producto-image">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3>Bono Regalo 1 Sesión</h3>
+                    <p class="precio">€150</p>
+                    <p class="descripcion">Regala una sesión de tatuaje. Válido por 6 meses.</p>
+                    <button class="btn btn-primary btn-comprar">Comprar</button>
+                </div>
+                
+                <div class="producto-card">
+                    <div class="producto-image">
+                        <i class="fas fa-spray-can"></i>
+                    </div>
+                    <h3>Kit Cuidado Post-Tatuaje</h3>
+                    <p class="precio">€35</p>
+                    <p class="descripcion">Todo lo necesario para cuidar tu nuevo tatuaje.</p>
+                    <button class="btn btn-primary btn-comprar">Comprar</button>
+                </div>
+                
+                <div class="producto-card">
+                    <div class="producto-image">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Diseño Personalizado</h3>
+                    <p class="precio">€80</p>
+                    <p class="descripcion">Diseño único creado especialmente para ti.</p>
+                    <button class="btn btn-primary btn-comprar">Comprar</button>
+                </div>
+                
+                <div class="producto-card">
+                    <div class="producto-image">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h3>Merchandise</h3>
+                    <p class="precio">€25</p>
+                    <p class="descripcion">Camisetas y accesorios del estudio.</p>
+                    <button class="btn btn-primary btn-comprar">Comprar</button>
+                </div>
+                
+                <div class="producto-card">
+                    <div class="producto-image">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Consulta Diseño</h3>
+                    <p class="precio">€40</p>
+                    <p class="descripcion">1 hora de consulta para planificar tu tatuaje.</p>
+                    <button class="btn btn-primary btn-comprar">Comprar</button>
+                </div>
+                
+                <div class="producto-card">
+                    <div class="producto-image">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Sesión Flash</h3>
+                    <p class="precio">€100</p>
+                    <p class="descripcion">Tatuajes pre-diseñados de tamaño pequeño.</p>
+                    <button class="btn btn-primary btn-comprar">Comprar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="services-section">
+        <div class="container">
+            <h2 class="section-title">Servicios</h2>
+            <p class="section-subtitle">Ofrezco una amplia gama de servicios profesionales</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>Diseño Personalizado</h3>
+                    <p>Creación de diseños únicos adaptados a tus ideas y preferencias personales.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Tatuajes Tradicionales</h3>
+                    <p>Estilo clásico americano con líneas sólidas y colores vibrantes.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Realismo</h3>
+                    <p>Tatuajes realistas con sombreado detallado y profundidad impresionante.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shapes"></i>
+                    </div>
+                    <h3>Geométrico</h3>
+                    <p>Diseños modernos con formas geométricas y patrones precisos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-droplet"></i>
+                    </div>
+                    <h3>Acuarela</h3>
+                    <p>Estilo artístico con colores vibrantes y efectos de acuarela.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-eraser"></i>
+                    </div>
+                    <h3>Cover-Up</h3>
+                    <p>Transformación de tatuajes antiguos en nuevas obras maestras.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <p class="section-subtitle">¿Listo para tu próximo tatuaje? Ponte en contacto conmigo</p>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Dirección</h4>
+                            <p>Calle Principal 123<br>Ciudad, CP 12345</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Teléfono</h4>
+                            <p>+34 123 456 789</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@inkartstudio.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Horario</h4>
+                            <p>Lun - Vie: 10:00 - 20:00<br>Sáb: 11:00 - 18:00</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/boceto.juangiraldo" target="_blank" rel="noopener noreferrer" aria-label="Visitar Instagram de Boceto Juan Giraldo"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook" class="social-disabled"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter" class="social-disabled"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube" class="social-disabled"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contactForm" novalidate>
+                    <div class="form-group">
+                        <input 
+                            type="text" 
+                            id="nombre" 
+                            name="nombre" 
+                            required 
+                            minlength="3"
+                            maxlength="100"
+                            pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                            aria-label="Nombre completo"
+                            autocomplete="name">
+                        <label for="nombre">Nombre Completo</label>
+                        <span class="error-message" role="alert"></span>
+                    </div>
+                    <div class="form-group">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            required
+                            maxlength="100"
+                            aria-label="Correo electrónico"
+                            autocomplete="email">
+                        <label for="email">Email</label>
+                        <span class="error-message" role="alert"></span>
+                    </div>
+                    <div class="form-group">
+                        <input 
+                            type="tel" 
+                            id="telefono" 
+                            name="telefono" 
+                            required
+                            pattern="[0-9+\s-()]+"
+                            minlength="9"
+                            maxlength="20"
+                            aria-label="Número de teléfono"
+                            autocomplete="tel">
+                        <label for="telefono">Teléfono</label>
+                        <span class="error-message" role="alert"></span>
+                    </div>
+                    <div class="form-group">
+                        <textarea 
+                            id="mensaje" 
+                            name="mensaje" 
+                            rows="5" 
+                            required
+                            minlength="10"
+                            maxlength="500"
+                            aria-label="Descripción de tu idea de tatuaje"></textarea>
+                        <label for="mensaje">Cuéntame sobre tu idea de tatuaje</label>
+                        <span class="error-message" role="alert"></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <span class="btn-text">Enviar Mensaje</span>
+                            <span class="btn-loader" style="display:none;">
+                                <i class="fas fa-spinner fa-spin"></i> Enviando...
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-feather-alt"></i>
+                    <span>Boceto Juan Giraldo</span>
+                </div>
+                <p>&copy; 2026 Boceto Juan Giraldo. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for Gallery -->
+    <div class="modal" id="galleryModal">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <div class="modal-content">
+            <img src="" alt="" id="modalImage">
+        </div>
+    </div>
+
+    <!-- Modal Carrito -->
+    <div class="modal" id="carritoModal">
+        <button class="modal-close" id="carritoClose">&times;</button>
+        <div class="carrito-content">
+            <h2>Carrito de Compras</h2>
+            <div id="carritoItems"></div>
+            <div class="carrito-total">
+                <h3>Total: <span id="totalCarrito">€0</span></h3>
+            </div>
+            <button class="btn btn-primary" id="finalizarCompra">Finalizar Compra</button>
+        </div>
+    </div>
+
+    <!-- Instagram Feed Info -->
+    <!-- Para integrar Instagram:
+    1. Crea una app en developers.facebook.com
+    2. Obtén tu Access Token de Instagram Basic Display API
+    3. Actualiza el token en script.js
+    4. Las imágenes se cargarán automáticamente desde tu Instagram
+    -->
+
+    <script src="script.js"></script>
+</body>
+</html>
