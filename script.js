@@ -958,12 +958,12 @@ class CheckoutController {
         
         if (!checkoutItems) return;
         
-        checkoutItems.innerHTML = cart.items.map(item => \
+        checkoutItems.innerHTML = cart.items.map(item => `
             <div class='checkout-item'>
-                <span>\ x\</span>
-                <span>\</span>
+                <span>${item.nombre} x${item.cantidad}</span>
+                <span>${item.precio}</span>
             </div>
-        \).join('');
+        `).join('');
         
         const total = this.calcularTotal();
         checkoutSubtotal.textContent = total;
@@ -975,7 +975,7 @@ class CheckoutController {
             const precio = parseFloat(item.precio.replace('€', '').trim());
             return sum + (precio * item.cantidad);
         }, 0);
-        return \€\\;
+        return `€${total.toFixed(2)}`;
     }
     
     procesarPedido(e) {
@@ -1003,39 +1003,39 @@ class CheckoutController {
         
         // Preparar mensaje
         const productos = cart.items.map(item => 
-            \\ x\ - \\
-        ).join('\\n');
+            `${item.nombre} x${item.cantidad} - ${item.precio}`
+        ).join('\n');
         
         const total = this.calcularTotal();
         
-        const mensaje = \
-*NUEVO PEDIDO #\*
+        const mensaje = `
+*NUEVO PEDIDO #${numeroPedido}*
 
 📦 *Productos:*
-\
+${productos}
 
-💰 *Total:* \
+💰 *Total:* ${total}
 
 👤 *Cliente:*
-Nombre: \
-Email: \
-Teléfono: \
-Ciudad: \
-\
+Nombre: ${datos.nombre}
+Email: ${datos.email}
+Teléfono: ${datos.telefono}
+Ciudad: ${datos.ciudad}
+${datos.direccion ? 'Dirección: ' + datos.direccion : ''}
 
-\
-        \.trim();
+${datos.notas ? '📝 Notas: ' + datos.notas : ''}
+        `.trim();
         
         // Enviar según método elegido
         if (datos.metodo === 'whatsapp') {
             const phone = '34600000000'; // Cambiar por tu número
-            const url = \https://wa.me/\?text=\\;
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
         } else {
             // Crear mailto
-            const subject = \Nuevo Pedido #\\;
+            const subject = `Nuevo Pedido #${numeroPedido}`;
             const body = mensaje.replace(/\*/g, '');
-            const mailtoUrl = \mailto:contacto@ejemplo.com?subject=\&body=\\;
+            const mailtoUrl = `mailto:contacto@ejemplo.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             window.location.href = mailtoUrl;
         }
         
@@ -1074,7 +1074,7 @@ class CartMejorado {
         }
         this.save();
         this.updateCount();
-        notificationSystem.show(\\ añadido al carrito\, 'success');
+        notificationSystem.show(`${producto.nombre} añadido al carrito`, 'success');
     }
     
     remove(nombre) {
@@ -1121,36 +1121,36 @@ class CartMejorado {
         if (!carritoItems) return;
         
         if (this.items.length === 0) {
-            carritoItems.innerHTML = '<p style=\\"color: rgba(255,255,255,0.7); text-align: center; padding: 40px;\\">Tu carrito está vacío</p>';
+            carritoItems.innerHTML = '<p style="color: rgba(255,255,255,0.7); text-align: center; padding: 40px;">Tu carrito está vacío</p>';
             if (totalElement) totalElement.textContent = '€0';
             if (subtotalElement) subtotalElement.textContent = '€0';
             return;
         }
         
-        carritoItems.innerHTML = this.items.map(item => \
+        carritoItems.innerHTML = this.items.map(item => `
             <div class='carrito-item'>
                 <div class='item-info'>
-                    <div class='item-nombre'>\</div>
-                    <div class='item-precio'>\</div>
+                    <div class='item-nombre'>${item.nombre}</div>
+                    <div class='item-precio'>${item.precio}</div>
                 </div>
                 <div class='item-cantidad'>
-                    <button class='cantidad-btn' onclick='cart.updateQuantity("\", \)'>-</button>
-                    <span class='cantidad-num'>\</span>
-                    <button class='cantidad-btn' onclick='cart.updateQuantity("\", \)'>+</button>
+                    <button class='cantidad-btn' onclick='cart.updateQuantity("${item.nombre}", ${item.cantidad - 1})'>-</button>
+                    <span class='cantidad-num'>${item.cantidad}</span>
+                    <button class='cantidad-btn' onclick='cart.updateQuantity("${item.nombre}", ${item.cantidad + 1})'>+</button>
                 </div>
-                <button class='item-eliminar' onclick='cart.remove("\")'>
+                <button class='item-eliminar' onclick='cart.remove("${item.nombre}")'>
                     <i class='fas fa-trash'></i>
                 </button>
             </div>
-        \).join('');
+        `).join('');
         
         const total = this.items.reduce((sum, item) => {
             const precio = parseFloat(item.precio.replace('€', '').trim());
             return sum + (precio * item.cantidad);
         }, 0);
         
-        if (totalElement) totalElement.textContent = \€\\;
-        if (subtotalElement) subtotalElement.textContent = \€\\;
+        if (totalElement) totalElement.textContent = `€${total.toFixed(2)}`;
+        if (subtotalElement) subtotalElement.textContent = `€${total.toFixed(2)}`;
     }
 }
 
@@ -1203,7 +1203,7 @@ const imageObserver = new IntersectionObserver((entries, observer) => {
 lazyImages.forEach(img => imageObserver.observe(img));
 
 // Smooth scroll con offset para navbar fijo
-document.querySelectorAll('a[href^=\\"#\\"]').forEach(anchor => {
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
         if (href !== '#' && href !== '') {
@@ -1228,7 +1228,7 @@ window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero');
             if (hero) {
                 const scrolled = window.pageYOffset;
-                hero.style.transform = \	ranslateY(\px)\;
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
             }
             ticking = false;
         });
@@ -1289,7 +1289,7 @@ class NotificationSystemMejorado {
     createContainer() {
         const container = document.createElement('div');
         container.id = 'notificationContainer';
-        container.style.cssText = \
+        container.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
@@ -1297,7 +1297,7 @@ class NotificationSystemMejorado {
             display: flex;
             flex-direction: column;
             gap: 10px;
-        \;
+        `;
         document.body.appendChild(container);
         return container;
     }
@@ -1311,8 +1311,8 @@ class NotificationSystemMejorado {
                        type === 'error' ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 
                        'linear-gradient(135deg, #3b82f6, #2563eb)';
         
-        notification.style.cssText = \
-            background: \;
+        notification.style.cssText = `
+            background: ${bgColor};
             color: white;
             padding: 16px 24px;
             border-radius: 12px;
@@ -1323,12 +1323,12 @@ class NotificationSystemMejorado {
             font-weight: 500;
             min-width: 300px;
             backdrop-filter: blur(10px);
-        \;
+        `;
         
-        notification.innerHTML = \
-            <span style="font-size: 24px; font-weight: bold;">\</span>
-            <span>\</span>
-        \;
+        notification.innerHTML = `
+            <span style="font-size: 24px; font-weight: bold;">${icon}</span>
+            <span>${message}</span>
+        `;
         
         this.container.appendChild(notification);
         
@@ -1348,7 +1348,7 @@ if (typeof notificationSystem !== 'undefined') {
 const showLoading = () => {
     const overlay = document.createElement('div');
     overlay.id = 'loadingOverlay';
-    overlay.style.cssText = \
+    overlay.style.cssText = `
         position: fixed;
         top: 0;
         left: 0;
@@ -1360,14 +1360,14 @@ const showLoading = () => {
         align-items: center;
         justify-content: center;
         z-index: 99999;
-    \;
+    `;
     
-    overlay.innerHTML = \
+    overlay.innerHTML = `
         <div style="text-align: center;">
             <div class="loading-spinner" style="width: 60px; height: 60px; border-width: 5px; margin: 0 auto 20px;"></div>
             <p style="color: white; font-size: 18px;">Procesando pedido...</p>
         </div>
-    \;
+    `;
     
     document.body.appendChild(overlay);
     return overlay;
