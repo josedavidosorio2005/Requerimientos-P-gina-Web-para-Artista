@@ -2,17 +2,23 @@
    DISEÑO MINIMALISTA - ARTISTA TATUADOR
    =================================== */
 
-/* Variables de color minimalistas */
+/* Variables de color VIBRANTES Y MODERNAS */
 :root {
-    --primary-color: #2c2c2c;
-    --secondary-color: #1a1a1a;
-    --accent-color: #f8f8f8;
+    --primary-color: #ff006e;
+    --secondary-color: #7209b7;
+    --accent-color: #f72585;
     --dark-color: #000000;
     --light-color: #ffffff;
     --gray-color: #888888;
     --border-color: #e0e0e0;
-    --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    --shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    --shadow-colored: 0 10px 40px rgba(255, 0, 110, 0.3);
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Reset y estilos base */
@@ -31,12 +37,20 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     line-height: 1.7;
     color: var(--secondary-color);
-    background: var(--light-color);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #667eea 75%, #764ba2 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
     overflow-x: hidden;
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Contenedor principal */
@@ -54,11 +68,13 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     z-index: 1000;
     padding: 1.2rem 0;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid rgba(255, 0, 110, 0.3);
+    box-shadow: 0 8px 32px rgba(255, 0, 110, 0.2);
     transition: var(--transition);
 }
 
@@ -78,14 +94,30 @@ body {
     align-items: center;
     gap: 12px;
     font-size: 1.3rem;
-    font-weight: 400;
-    color: var(--secondary-color);
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff006e, #7209b7, #3a0ca3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     letter-spacing: 0.5px;
+    text-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+    animation: textGlow 3s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+    0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 0, 110, 0.5)); }
+    50% { filter: drop-shadow(0 0 20px rgba(114, 9, 183, 0.8)); }
 }
 
 .nav-brand i {
-    color: var(--secondary-color);
+    color: #ff006e;
     font-size: 1.2rem;
+    animation: spin 20s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .nav-menu {
@@ -96,14 +128,16 @@ body {
 }
 
 .nav-menu a {
-    color: var(--secondary-color);
+    color: #fff;
     text-decoration: none;
-    font-weight: 300;
+    font-weight: 500;
     transition: var(--transition);
     position: relative;
     font-size: 0.9rem;
-    padding: 8px 0;
+    padding: 8px 16px;
     letter-spacing: 0.5px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
 }
 
 .nav-menu a::after {
@@ -113,9 +147,15 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: 0;
-    height: 1px;
-    background: var(--secondary-color);
+    height: 3px;
+    background: linear-gradient(90deg, #ff006e, #ffbe0b);
     transition: var(--transition);
+    border-radius: 2px;
+}
+
+.nav-menu a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
 }
 
 .nav-menu a:hover::after {
@@ -123,20 +163,23 @@ body {
 }
 
 .nav-menu .btn-instagram {
-    background: transparent;
-    padding: 8px 18px;
-    border: 1px solid var(--border-color);
-    color: var(--secondary-color);
-    font-weight: 300;
-    border-radius: 0;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    padding: 10px 20px;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 25px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     letter-spacing: 0.5px;
+    box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+    transform: scale(1);
 }
 
 .nav-menu .btn-instagram:hover {
-    border-color: var(--secondary-color);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 10px 30px rgba(245, 87, 108, 0.6);
 }
 
 .nav-menu .btn-instagram::after {
@@ -180,12 +223,12 @@ body {
 }
 
 /* ===================================
-   HERO SECTION
+   HERO SECTION - DISEÑO IMPACTANTE
    =================================== */
 
 .hero {
     height: 100vh;
-    background: var(--light-color);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -193,29 +236,101 @@ body {
     overflow: hidden;
 }
 
+/* Efectos de partículas flotantes */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: float 20s linear infinite;
+    z-index: 0;
+}
+
+@keyframes float {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to { transform: translate(100px, 100px) rotate(360deg); }
+}
+
+/* Efectos de luz */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 50%, rgba(255, 0, 110, 0.3), transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(114, 9, 183, 0.3), transparent 50%);
+    animation: pulse 8s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
 .hero-content {
     text-align: center;
-    color: var(--secondary-color);
+    color: #fff;
     z-index: 1;
     padding: 0 20px;
-    max-width: 700px;
+    max-width: 900px;
+    position: relative;
 }
 
 .hero-content h1 {
-    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-size: clamp(3rem, 10vw, 6rem);
     margin-bottom: 1.5rem;
-    font-weight: 300;
-    letter-spacing: -1px;
+    font-weight: 900;
+    letter-spacing: -2px;
     line-height: 1.1;
+    text-shadow: 
+        0 0 20px rgba(255, 0, 110, 0.5),
+        0 0 40px rgba(114, 9, 183, 0.3),
+        0 5px 20px rgba(0, 0, 0, 0.3);
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 
+            0 0 20px rgba(255, 0, 110, 0.5),
+            0 0 40px rgba(114, 9, 183, 0.3),
+            0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        text-shadow: 
+            0 0 30px rgba(255, 0, 110, 0.8),
+            0 0 60px rgba(114, 9, 183, 0.6),
+            0 5px 20px rgba(0, 0, 0, 0.3);
+    }
 }
 
 .hero-content p {
-    font-size: clamp(1rem, 3vw, 1.2rem);
-    margin-bottom: 2.5rem;
-    font-weight: 300;
-    color: var(--gray-color);
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    margin-bottom: 3rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
     line-height: 1.6;
-    letter-spacing: 0.3px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .scroll-indicator {
@@ -223,62 +338,88 @@ body {
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    color: var(--gray-color);
-    font-size: 1.5rem;
-    animation: bounce 2s infinite;
-    opacity: 0.5;
+    color: #fff;
+    font-size: 2rem;
+    animation: bounceGlow 2s infinite;
+    z-index: 2;
+    text-shadow: 0 0 20px rgba(255, 0, 110, 0.8);
 }
 
-@keyframes bounce {
+@keyframes bounceGlow {
     0%, 20%, 50%, 80%, 100% {
         transform: translateX(-50%) translateY(0);
+        text-shadow: 0 0 20px rgba(255, 0, 110, 0.8);
     }
     40% {
-        transform: translateX(-50%) translateY(-10px);
+        transform: translateX(-50%) translateY(-15px);
+        text-shadow: 0 0 30px rgba(114, 9, 183, 1);
     }
     60% {
-        transform: translateX(-50%) translateY(-5px);
+        transform: translateX(-50%) translateY(-8px);
+        text-shadow: 0 0 25px rgba(255, 190, 11, 0.9);
     }
 }
 
 /* ===================================
-   BOTONES
+   BOTONES - DISEÑO MODERNO Y VIBRANTE
    =================================== */
 
 .btn {
     display: inline-block;
-    padding: 14px 32px;
-    border-radius: 0;
+    padding: 16px 40px;
+    border-radius: 50px;
     text-decoration: none;
-    font-weight: 300;
+    font-weight: 700;
     transition: var(--transition);
     cursor: pointer;
-    border: 1px solid var(--secondary-color);
-    font-size: 0.9rem;
-    min-height: 48px;
-    letter-spacing: 0.8px;
+    border: none;
+    font-size: 1rem;
+    min-height: 50px;
+    letter-spacing: 1px;
     text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 .btn-primary {
-    background: var(--secondary-color);
-    color: var(--light-color);
+    background: linear-gradient(135deg, #ff006e 0%, #f72585 50%, #7209b7 100%);
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(255, 0, 110, 0.4);
 }
 
 .btn-primary:hover {
-    background: transparent;
-    color: var(--secondary-color);
-    transform: translateY(-2px);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(255, 0, 110, 0.6);
 }
 
 .btn-secondary {
-    background: transparent;
-    color: var(--secondary-color);
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
 }
 
 .btn-secondary:hover {
-    background: var(--secondary-color);
-    color: var(--light-color);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(79, 172, 254, 0.6);
 }
 
 /* ===================================
@@ -286,31 +427,60 @@ body {
    =================================== */
 
 .section-title {
-    font-size: clamp(1.8rem, 5vw, 2.2rem);
-    margin-bottom: 1rem;
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    margin-bottom: 1.5rem;
     text-align: center;
-    color: var(--secondary-color);
-    font-weight: 300;
-    letter-spacing: -0.5px;
+    color: #fff;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-shadow: 
+        0 0 20px rgba(255, 0, 110, 0.5),
+        0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeInScale 1s ease-out;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .section-subtitle {
     text-align: center;
-    color: var(--gray-color);
+    color: rgba(255, 255, 255, 0.95);
     margin-bottom: 4rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.8;
-    font-weight: 300;
-    letter-spacing: 0.3px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* ===================================
-   ABOUT SECTION
+   ABOUT SECTION - DISEÑO VIBRANTE
    =================================== */
 
 .about-section {
     padding: 120px 0;
-    background: var(--light-color);
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.about-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.3"/></svg>');
+    opacity: 0.1;
 }
 
 .about-content {
@@ -325,32 +495,54 @@ body {
     width: 100%;
     max-width: 400px;
     aspect-ratio: 1;
-    background: var(--accent-color);
+    background: linear-gradient(135deg, #ff006e 0%, #7209b7 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--border-color);
+    border: none;
+    border-radius: 20px;
     margin: 0 auto;
+    box-shadow: 
+        0 20px 60px rgba(255, 0, 110, 0.4),
+        0 0 0 10px rgba(255, 255, 255, 0.2);
+    transition: var(--transition);
+}
+
+.image-placeholder:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 
+        0 30px 80px rgba(255, 0, 110, 0.6),
+        0 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .image-placeholder i {
-    font-size: 80px;
-    color: var(--gray-color);
-    opacity: 0.3;
+    font-size: 100px;
+    color: rgba(255, 255, 255, 0.9);
+    opacity: 1;
+    animation: pulse 2s ease-in-out infinite;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.1); opacity: 1; }
 }
 
 .about-text h3 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin-bottom: 1.5rem;
-    color: var(--secondary-color);
-    font-weight: 400;
+    color: #fff;
+    font-weight: 900;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .about-text p {
-    color: var(--gray-color);
+    color: rgba(255, 255, 255, 0.95);
     line-height: 1.8;
     margin-bottom: 1.5rem;
-    font-weight: 300;
+    font-weight: 400;
+    font-size: 1.05rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .stats-grid {
@@ -361,38 +553,190 @@ body {
 
 .stat-item {
     text-align: center;
-    padding: 30px 20px;
-    background: transparent;
-    border: 1px solid var(--border-color);
+    padding: 40px 30px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
     transition: var(--transition);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .stat-item:hover {
-    border-color: var(--secondary-color);
+    transform: translateY(-10px) scale(1.05);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 20px 50px rgba(255, 0, 110, 0.4);
 }
 
 .stat-item h3 {
-    font-size: 2.5rem;
-    color: var(--secondary-color);
-    margin-bottom: 8px;
-    font-weight: 300;
+    font-size: 3.5rem;
+    color: #fff;
+    margin-bottom: 12px;
+    font-weight: 900;
+    text-shadow: 
+        0 0 20px rgba(255, 0, 110, 0.6),
+        0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: countUp 2s ease-out;
+}
+
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .stat-item p {
-    color: var(--gray-color);
-    font-size: 0.85rem;
-    font-weight: 300;
-    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
     text-transform: uppercase;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* ===================================
-   GALLERY SECTION
+   GALLERY SECTION - DIBUJOS A LÁPIZ CON COLORES VIBRANTES
    =================================== */
 
 .gallery-section {
     padding: 120px 0;
-    background: var(--accent-color);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    position: relative;
+}
+
+/* Efecto de superposición para mejor contraste */
+.gallery-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.gallery-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Títulos de sección con sombra colorida */
+.gallery-section .section-title {
+    color: #fff;
+    text-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+.gallery-section .section-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo especial para exhibir dibujos a lápiz */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    background: var(--light-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    border-color: var(--secondary-color);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(10%) contrast(1.1);
+    transition: var(--transition);
+}
+
+.gallery-item:hover img {
+    filter: grayscale(0%) contrast(1.15);
+    transform: scale(1.05);
+}
+
+/* Efecto de papel texturizado para dibujos a lápiz */
+.gallery-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.02) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(255, 255, 255, 0.02) 3px
+        );
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.3;
+}
+
+/* Overlay con información del dibujo */
+.gallery-item .gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    padding: 30px 20px 20px;
+    transform: translateY(100%);
+    transition: var(--transition);
+    z-index: 2;
+}
+
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
+
+.gallery-overlay h3 {
+    color: var(--light-color);
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.gallery-overlay p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+}
+
+/* Marco estilo galería de arte */
+.gallery-item-frame {
+    padding: 15px;
+    background: var(--light-color);
+    box-shadow: 
+        0 2px 5px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.gallery-item-frame:hover {
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 .gallery-filters {
@@ -404,24 +748,35 @@ body {
 }
 
 .filter-btn {
-    padding: 10px 25px;
-    border: 1px solid var(--border-color);
-    background: transparent;
-    color: var(--gray-color);
+    padding: 12px 30px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: #fff;
     cursor: pointer;
     transition: var(--transition);
-    font-weight: 300;
-    min-height: 44px;
-    letter-spacing: 0.5px;
+    font-weight: 600;
+    min-height: 48px;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    border-radius: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
-.filter-btn:hover,
+.filter-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 0, 110, 0.4);
+}
+
 .filter-btn.active {
-    background: var(--secondary-color);
-    color: var(--light-color);
-    border-color: var(--secondary-color);
+    background: linear-gradient(135deg, #ff006e, #f72585);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 10px 30px rgba(255, 0, 110, 0.5);
+    transform: translateY(-3px) scale(1.05);
 }
 
 .gallery-grid {
@@ -454,33 +809,59 @@ body {
 .gallery-placeholder {
     width: 100%;
     height: 100%;
-    background: var(--light-color);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--gray-color);
+    color: #fff;
     gap: 15px;
+    transition: var(--transition);
+}
+
+.gallery-item:hover .gallery-placeholder {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    transform: scale(1.05);
 }
 
 .gallery-placeholder i {
-    font-size: 50px;
-    opacity: 0.3;
+    font-size: 60px;
+    opacity: 0.9;
+    animation: floatIcon 3s ease-in-out infinite;
+    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes floatIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 .gallery-placeholder p {
-    font-size: 0.9rem;
-    font-weight: 300;
-    letter-spacing: 0.5px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* ===================================
-   SHOP SECTION
+   SHOP SECTION - DISEÑO VIBRANTE
    =================================== */
 
 .shop-section {
     padding: 120px 0;
-    background: var(--light-color);
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    position: relative;
+}
+
+.shop-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.2), transparent 60%);
+    pointer-events: none;
 }
 
 .products-grid {
@@ -914,12 +1295,387 @@ footer {
     to {
         transform: translateX(0);
         opacity: 1;
-    }
 }
 
 /* ===================================
-   RESPONSIVE
+   ESTILOS ESPECIALES PARA DIBUJOS A LÁPIZ
    =================================== */
+
+/* Variante con marco artístico tipo galería - CON COLORES VIBRANTES */
+.gallery-item.pencil-art {
+    padding: 20px;
+    background: linear-gradient(135deg, #e63946 0%, #f1faee 100%);
+    box-shadow: 
+        0 10px 30px rgba(230, 57, 70, 0.3),
+        inset 0 0 0 8px #fff,
+        inset 0 0 0 9px rgba(230, 57, 70, 0.4);
+}
+
+/* Variantes de colores diferentes para cada obra */
+.gallery-item.pencil-art:nth-child(2n) {
+    background: linear-gradient(135deg, #457b9d 0%, #a8dadc 100%);
+    box-shadow: 
+        0 10px 30px rgba(69, 123, 157, 0.3),
+        inset 0 0 0 8px #fff,
+        inset 0 0 0 9px rgba(69, 123, 157, 0.4);
+}
+
+.gallery-item.pencil-art:nth-child(3n) {
+    background: linear-gradient(135deg, #2a9d8f 0%, #e9c46a 100%);
+    box-shadow: 
+        0 10px 30px rgba(42, 157, 143, 0.3),
+        inset 0 0 0 8px #fff,
+        inset 0 0 0 9px rgba(42, 157, 143, 0.4);
+}
+
+.gallery-item.pencil-art:nth-child(4n) {
+    background: linear-gradient(135deg, #7209b7 0%, #f72585 100%);
+    box-shadow: 
+        0 10px 30px rgba(114, 9, 183, 0.3),
+        inset 0 0 0 8px #fff,
+        inset 0 0 0 9px rgba(114, 9, 183, 0.4);
+}
+
+.gallery-item.pencil-art:nth-child(5n) {
+    background: linear-gradient(135deg, #ff6d00 0%, #ffaa00 100%);
+    box-shadow: 
+        0 10px 30px rgba(255, 109, 0, 0.3),
+        inset 0 0 0 8px #fff,
+        inset 0 0 0 9px rgba(255, 109, 0, 0.4);
+}
+
+.gallery-item-pencil {
+    position: relative;
+    background: linear-gradient(145deg, #ff006e, #8338ec);
+    padding: 20px;
+    border: 2px solid #fb5607;
+    box-shadow: 
+        0 8px 25px rgba(255, 0, 110, 0.4),
+        inset 0 0 60px rgba(131, 56, 236, 0.2);
+    transition: all 0.4s ease;
+}
+
+.gallery-item-frame.pencil-art {
+    padding: 20px;
+    background: linear-gradient(135deg, #06ffa5 0%, #00d4ff 100%);
+    box-shadow: 
+        0 8px 25px rgba(0, 212, 255, 0.4),
+        inset 0 0 0 1px rgba(6, 255, 165, 0.3),
+        inset 0 0 20px rgba(0, 212, 255, 0.2);
+    position: relative;
+}
+
+.gallery-item-frame:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.2),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Sombra de marco 3D para dibujos - COLORES VIBRANTES */
+.pencil-art-frame {
+    position: relative;
+    padding: 20px;
+    background: linear-gradient(145deg, #ffd60a, #ffc300);
+    box-shadow: 
+        0 4px 15px rgba(255, 214, 10, 0.5),
+        0 0 0 8px #fff,
+        0 0 0 10px #e63946,
+        0 0 0 12px #fff,
+        0 0 20px rgba(230, 57, 70, 0.4);
+    transition: all 0.4s ease;
+}
+
+.gallery-item.pencil-art:hover {
+    transform: translateY(-15px) rotate(1deg) scale(1.02);
+    box-shadow: 
+        0 20px 50px rgba(230, 57, 70, 0.5),
+        0 0 30px rgba(230, 57, 70, 0.3),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+    filter: brightness(1.1);
+}
+
+/* Estilo de sketches y bocetos */
+.sketch-style {
+    position: relative;
+}
+
+.sketch-style::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(45deg, transparent 48%, rgba(0,0,0,.02) 49%, rgba(0,0,0,.02) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(0,0,0,.02) 49%, rgba(0,0,0,.02) 51%, transparent 52%);
+    background-size: 3px 3px;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+/* Clase especial para dibujos a lápiz - FONDOS VIBRANTES */
+.pencil-art {
+    background: linear-gradient(135deg, #f72585, #7209b7, #3a0ca3);
+    padding: 20px;
+    box-shadow: 
+        0 8px 25px rgba(247, 37, 133, 0.5),
+        0 0 30px rgba(114, 9, 183, 0.3);
+    border: 2px solid #f72585;
+}
+
+.pencil-sketch {
+    filter: contrast(1.15) saturate(0.8) brightness(1.05);
+    mix-blend-mode: multiply;
+}
+
+/* Estilo firma de artista en esquina */
+.gallery-item .artist-signature {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-family: 'Brush Script MT', cursive, serif;
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.6);
+    z-index: 3;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.gallery-item:hover .artist-signature {
+    opacity: 1;
+}
+
+/* Grid especial para dibujos a lápiz - FONDO CON COLOR */
+.pencil-art-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    padding: 20px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+/* Item individual de dibujo a lápiz - CON COLORES */
+.pencil-drawing-item {
+    background: linear-gradient(145deg, #06ffa5, #fffb00);
+    padding: 20px;
+    box-shadow: 
+        0 8px 20px rgba(6, 255, 165, 0.4),
+        0 0 0 8px #fff,
+        0 0 0 10px rgba(255, 251, 0, 0.6);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.pencil-drawing-item:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 
+        0 15px 40px rgba(6, 255, 165, 0.6),
+        0 0 0 8px #fff,
+        0 0 0 10px rgba(255, 251, 0, 0.8),
+        0 0 50px rgba(6, 255, 165, 0.4);
+} 
+        0 1px 3px rgba(0, 0, 0, 0.12),
+        0 1px 2px rgba(0, 0, 0, 0.08),
+        0 0 0 8px #fff,
+        0 0 0 9px #e0e0e0;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.gallery-item.pencil-art {
+    background: #fafafa;
+    padding: 20px;
+    box-shadow: 
+        0 4px 6px rgba(0, 0, 0, 0.07),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.gallery-item.pencil-art:hover {
+    transform: translateY(-10px) rotate(0.5deg);
+    box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.2),
+        inset 0 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Efecto de sombra de marco de madera - CON COLORES VIBRANTES */
+.gallery-item.frame-style {
+    padding: 20px;
+    background: linear-gradient(145deg, #ff006e, #ffbe0b);
+    box-shadow: 
+        0 10px 30px rgba(255, 0, 110, 0.4),
+        inset 0 0 0 8px #fff,
+        inset 0 0 0 10px #fb5607,
+        inset 0 0 0 12px #fff;
+}
+
+/* Variantes de colores para frame-style */
+.gallery-item.frame-style:nth-child(odd) {
+    background: linear-gradient(145deg, #4361ee, #4cc9f0);
+    box-shadow: 
+        0 10px 30px rgba(67, 97, 238, 0.4),
+        inset 0 0 0 8px #fff,
+        inset 0 0 0 10px #3a0ca3,
+        inset 0 0 0 12px #fff;
+}
+
+.gallery-item.frame-style:nth-child(3n) {
+    background: linear-gradient(145deg, #06ffa5, #00d4ff);
+    box-shadow: 
+        0 10px 30px rgba(6, 255, 165, 0.4),
+        inset 0 0 0 8px #fff,
+        inset 0 0 0 10px #0a9396,
+        inset 0 0 0 12px #fff;
+}
+
+.gallery-item-frame:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 
+        0 20px 50px rgba(255, 0, 110, 0.5),
+        0 0 40px rgba(255, 190, 11, 0.4),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.9);
+    filter: brightness(1.15) saturate(1.2);
+}
+
+/* Estilo de firma artística para dibujos - CON COLOR */
+.art-signature {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-family: 'Brush Script MT', cursive;
+    font-size: 1.2rem;
+    color: #ff006e;
+    text-shadow: 
+        0 0 10px rgba(255, 0, 110, 0.5),
+        2px 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+    font-style: italic;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+/* Efecto de lápiz sobre la imagen */
+.pencil-effect {
+    position: relative;
+}
+
+.pencil-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(135deg, transparent 48%, rgba(0,0,0,0.02) 49%, rgba(0,0,0,0.02) 51%, transparent 52%),
+        linear-gradient(45deg, transparent 48%, rgba(0,0,0,0.02) 49%, rgba(0,0,0,0.02) 51%, transparent 52%);
+    background-size: 3px 3px;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    opacity: 0.3;
+}
+
+/* Grid alternativo tipo masonería para dibujos */
+.gallery-masonry {
+    column-count: 3;
+    column-gap: 30px;
+}
+
+.gallery-masonry .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 30px;
+    aspect-ratio: auto;
+}
+
+/* Destacar dibujo principal */
+.gallery-item.featured {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.gallery-item.featured .gallery-overlay {
+    padding: 50px 30px 30px;
+}
+
+.gallery-item.featured h3 {
+    font-size: 1.5rem;
+}
+
+/* Animación de aparición */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.gallery-item {
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.gallery-item:nth-child(1) { animation-delay: 0.1s; }
+.gallery-item:nth-child(2) { animation-delay: 0.2s; }
+.gallery-item:nth-child(3) { animation-delay: 0.3s; }
+.gallery-item:nth-child(4) { animation-delay: 0.4s; }
+.gallery-item:nth-child(5) { animation-delay: 0.5s; }
+.gallery-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* Responsive para galería de dibujos */
+@media (max-width: 1024px) {
+    .gallery-masonry {
+        column-count: 2;
+    }
+    
+    .gallery-item.featured {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-masonry {
+        column-count: 1;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+```
+
+He añadido un conjunto completo de estilos profesionales para exhibir dibujos a lápiz. Las características incluyen:
+
+**Efectos visuales:**
+- ✏️ Filtro de escala de grises sutil para realzar el aspecto del lápiz
+- 📄 Textura de papel con efecto de líneas repetidas
+- 🖼️ Marcos estilo galería de arte con sombras elegantes
+- ✨ Efectos de trazo de lápiz con gradientes diagonales
+
+**Interactividad:**
+- Elevación y zoom al pasar el mouse
+- Overlay con información que aparece suavemente
+- Animaciones escalonadas de aparición
+- Transiciones fluidas
+
+**Opciones de diseño:**
+- Grid estándar adaptable
+- Vista tipo masonería (columnas)
+- Opción de dibujo destacado (featured) más grande
+- Espacio para firma artística
+
+**Responsive:**
+- 3 columnas en pantallas grandes
+- 2 columnas en tablets  
+- 1 columna en móviles
+
+Los dibujos tendrán un aspecto profesional de galería de arte, ideal para mostrar bocetos y dibujos a lápiz de forma elegante.
 
 @media (max-width: 1024px) {
     .container {
