@@ -585,16 +585,140 @@
         </div>
     </div>
 
-    <!-- Modal Carrito -->
+    <!-- Modal Carrito Mejorado -->
     <div class="modal" id="carritoModal">
         <button class="modal-close" id="carritoClose">&times;</button>
-        <div class="carrito-content">
-            <h2>Carrito de Compras</h2>
-            <div id="carritoItems"></div>
-            <div class="carrito-total">
-                <h3>Total: <span id="totalCarrito">€0</span></h3>
+        <div class="carrito-content-modern">
+            <h2 class="carrito-title">🛒 Tu Carrito</h2>
+            <div id="carritoItems" class="carrito-items-list"></div>
+            <div class="carrito-resumen">
+                <div class="resumen-line">
+                    <span>Subtotal:</span>
+                    <span id="subtotalCarrito">€0</span>
+                </div>
+                <div class="resumen-line">
+                    <span>Envío:</span>
+                    <span>Gratis</span>
+                </div>
+                <div class="carrito-total-final">
+                    <h3>Total: <span id="totalCarrito">€0</span></h3>
+                </div>
             </div>
-            <button class="btn btn-primary" id="finalizarCompra">Finalizar Compra</button>
+            <button class="btn btn-primary btn-checkout" id="irCheckout">
+                <i class="fas fa-credit-card"></i>
+                Proceder al Pago
+            </button>
+            <button class="btn btn-secondary btn-seguir-comprando" id="seguirComprando">
+                <i class="fas fa-shopping-bag"></i>
+                Seguir Comprando
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Checkout Completo -->
+    <div class="modal checkout-modal" id="checkoutModal">
+        <button class="modal-close" id="checkoutClose">&times;</button>
+        <div class="checkout-content">
+            <h2 class="checkout-title">💳 Finalizar Compra</h2>
+            
+            <div class="checkout-container">
+                <!-- Resumen del pedido -->
+                <div class="checkout-resumen">
+                    <h3>📋 Resumen del Pedido</h3>
+                    <div id="checkoutItems" class="checkout-items-list"></div>
+                    <div class="checkout-total-box">
+                        <div class="total-line">
+                            <span>Subtotal:</span>
+                            <span id="checkoutSubtotal">€0</span>
+                        </div>
+                        <div class="total-line">
+                            <span>Envío:</span>
+                            <span>Gratis</span>
+                        </div>
+                        <div class="total-line-final">
+                            <strong>Total:</strong>
+                            <strong id="checkoutTotal">€0</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Formulario de datos -->
+                <div class="checkout-form">
+                    <h3>📝 Tus Datos</h3>
+                    <form id="checkoutFormulario">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nombre">Nombre Completo *</label>
+                                <input type="text" id="nombre" name="nombre" required placeholder="Juan Pérez">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required placeholder="tu@email.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="telefono">Teléfono *</label>
+                                <input type="tel" id="telefono" name="telefono" required placeholder="+34 600 000 000">
+                            </div>
+                            <div class="form-group">
+                                <label for="ciudad">Ciudad *</label>
+                                <input type="text" id="ciudad" name="ciudad" required placeholder="Madrid">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="direccion">Dirección (opcional)</label>
+                            <input type="text" id="direccion" name="direccion" placeholder="Calle, número, piso">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notas">Notas adicionales</label>
+                            <textarea id="notas" name="notas" rows="3" placeholder="¿Algo que debamos saber?"></textarea>
+                        </div>
+                        
+                        <div class="metodos-pago">
+                            <h4>Método de Contacto:</h4>
+                            <div class="metodo-item">
+                                <input type="radio" id="whatsapp" name="metodo" value="whatsapp" checked>
+                                <label for="whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                    WhatsApp (Recomendado)
+                                </label>
+                            </div>
+                            <div class="metodo-item">
+                                <input type="radio" id="emailContacto" name="metodo" value="email">
+                                <label for="emailContacto">
+                                    <i class="fas fa-envelope"></i>
+                                    Email
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-confirmar-pedido">
+                            <i class="fas fa-check-circle"></i>
+                            Confirmar Pedido
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmación -->
+    <div class="modal confirmacion-modal" id="confirmacionModal">
+        <div class="confirmacion-content">
+            <div class="confirmacion-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>¡Pedido Recibido!</h2>
+            <p>Gracias por tu compra. Te contactaremos pronto para confirmar los detalles.</p>
+            <div class="confirmacion-numero">
+                <strong>Número de pedido:</strong>
+                <span id="numeroPedido"></span>
+            </div>
+            <button class="btn btn-primary" id="cerrarConfirmacion">Entendido</button>
         </div>
     </div>
 
