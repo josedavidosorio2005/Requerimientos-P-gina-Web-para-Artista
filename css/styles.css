@@ -1779,11 +1779,15 @@ footer::before {
 }
 
 /* Animaciones de entrada para scroll */
-.gallery-item,
-.service-card,
-.product-card,
-.about-content,
-.contact-content {
+.js .gallery-item,
+.js .service-card,
+.js .product-card,
+.js .about-content,
+.js .contact-content,
+.js .about-section,
+.js .gallery-section,
+.js .services-section,
+.js .contact-section {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s ease, transform 0.6s ease;
@@ -1793,7 +1797,11 @@ footer::before {
 .service-card.animate-in,
 .product-card.animate-in,
 .about-content.animate-in,
-.contact-content.animate-in {
+.contact-content.animate-in,
+.about-section.animate-in,
+.gallery-section.animate-in,
+.services-section.animate-in,
+.contact-section.animate-in {
     opacity: 1;
     transform: translateY(0);
 }

@@ -7,6 +7,9 @@
 
 'use strict';
 
+// Marca el documento como "JS habilitado" para animaciones seguras (si JS falla, el contenido queda visible)
+document.documentElement.classList.add('js');
+
 // Configuración global
 const CONFIG = {
     instagram: {
@@ -805,6 +808,12 @@ function initSmoothScroll() {
 
 // Animaciones al scroll con Intersection Observer
 function initScrollAnimations() {
+    if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.about-section, .gallery-section, .services-section, .contact-section')
+            .forEach(section => section.classList.add('animate-in'));
+        return;
+    }
+
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -813,17 +822,14 @@ function initScrollAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('animate-in');
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
     // Observar secciones
-    document.querySelectorAll('.about-section, .gallery-section, .tienda-section, .services-section, .contact-section').forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(50px)';
-        section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    document.querySelectorAll('.about-section, .gallery-section, .services-section, .contact-section').forEach(section => {
         observer.observe(section);
     });
 }
