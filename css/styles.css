@@ -771,6 +771,9 @@ h1, h2, h3, h4, h5, h6 {
 .services-section {
     padding: 120px 0;
     background: var(--dark-color);
+    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 .services-grid {
@@ -967,18 +970,25 @@ h1, h2, h3, h4, h5, h6 {
 .contact-section {
     padding: 120px 0;
     background: var(--dark-color);
+    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 .contact-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
+    visibility: visible;
+    opacity: 1;
 }
 
 .contact-info {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    visibility: visible;
+    opacity: 1;
 }
 
 .info-item {
