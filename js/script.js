@@ -11,7 +11,7 @@
 const CONFIG = {
     instagram: {
         username: 'boceto.juangiraldo',
-        url: 'https://www.instagram.com/boceto.juangiraldo'
+        url: 'https://www.instagram.com/boceto.juangiraldo?igsh=MTFpNGY1bnV6dnh0NA=='
     },
     carrito: {
         storageKey: 'bj_carrito',
@@ -851,6 +851,109 @@ document.addEventListener('DOMContentLoaded', () => {
             notificationSystem.show('Próximamente disponible', 'info');
         });
     });
+
+    // Instagram Feed Loader - CON API REAL Y AUTO-ACTUALIZACIÓN
+    async function loadInstagramFeed() {
+        // Verificar si existe configuración externa
+        const instagramConfig = typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.social?.instagram 
+            ? SITE_CONFIG.social.instagram 
+            : CONFIG.instagram;
+        
+        const feedContainer = document.getElementById('instagram-feed');
+        const loadingIndicator = document.getElementById('instagram-loading');
+        const widgetContainer = document.getElementById('instagram-widget-container');
+        
+        if (!feedContainer) return;
+        
+        // Si se debe usar API y hay token, ocultar widget y mostrar feed API
+        if (instagramConfig.useAPI && instagramConfig.accessToken) {
+            console.log('📷 Instagram: Usando API para cargar publicaciones');
+            if (widgetContainer) widgetContainer.style.display = 'none';
+            
+            // Mostrar indicador de carga
+            if (loadingIndicator) loadingIndicator.style.display = 'block';
+            feedContainer.style.display = 'none';
+            
+            try {
+                // Llamar a la API de Instagram
+                const response = await fetch(
+                    `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${instagramConfig.accessToken}&limit=${instagramConfig.maxPosts || 12}`
+                );
+                
+                if (!response.ok) {
+                    throw new Error(`Error de API: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.data || data.data.length === 0) {
+                    throw new Error('No hay publicaciones disponibles');
+                }
+                
+                // Renderizar publicaciones reales de Instagram
+                feedContainer.innerHTML = data.data.map((post, index) => {
+                    const imageUrl = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
+                    const caption = post.caption ? post.caption.substring(0, 100) + '...' : 'Ver en Instagram';
+                    
+                    return `
+                        <div class="instagram-post" style="animation: fadeInUp 0.6s ease ${index * 0.1}s both;">
+                            <a href="${post.permalink}" target="_blank" rel="noopener noreferrer" title="${SecurityUtils.sanitizeHTML(caption)}">
+                                <img src="${imageUrl}" 
+                                     alt="${SecurityUtils.sanitizeHTML(caption)}"
+                                     loading="lazy"
+                                     onerror="this.parentElement.innerHTML='<div class=\\'instagram-post-placeholder\\'><i class=\\'fab fa-instagram\\'></i></div>';">
+                                ${post.media_type === 'VIDEO' ? '<div class="video-indicator"><i class="fas fa-play"></i></div>' : ''}
+                            </a>
+                        </div>
+                    `;
+                }).join('');
+                
+                // Mostrar feed y ocultar loading
+                feedContainer.style.display = 'grid';
+                if (loadingIndicator) loadingIndicator.style.display = 'none';
+                
+                console.log(`✅ ${data.data.length} publicaciones de Instagram cargadas desde API`);
+                
+            } catch (error) {
+                console.error('❌ Error cargando Instagram feed:', error);
+                
+                // Ocultar loading y mostrar mensaje
+                if (loadingIndicator) loadingIndicator.style.display = 'none';
+                feedContainer.innerHTML = `
+                    <div class="instagram-error">
+                        <i class="fab fa-instagram"></i>
+                        <p>No se pudieron cargar las publicaciones.</p>
+                        <p><a href="${instagramConfig.url || CONFIG.instagram.url}" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-instagram"></i> Ver en Instagram
+                        </a></p>
+                    </div>
+                `;
+                feedContainer.style.display = 'block';
+            }
+        } else {
+            // Usar widget embebido
+            console.log('📷 Instagram: Widget embebido activo (se actualiza automáticamente)');
+            console.log('💡 Para usar API directa, configura useAPI: true en config.js');
+        }
+    }
+    
+    // Auto-actualizar feed cada 30 minutos (solo si se usa API)
+    function setupAutoRefresh() {
+        const instagramConfig = typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.social?.instagram 
+            ? SITE_CONFIG.social.instagram 
+            : CONFIG.instagram;
+            
+        if (instagramConfig.useAPI && instagramConfig.accessToken) {
+            setInterval(() => {
+                console.log('🔄 Actualizando feed de Instagram...');
+                loadInstagramFeed();
+            }, 30 * 60 * 1000); // 30 minutos
+        }
+    }
+
+    // Cargar feed de Instagram al iniciar
+    loadInstagramFeed();
+    setupAutoRefresh();
 
     // Instagram info
     console.log(`📷 Instagram: @${CONFIG.instagram.username}`);

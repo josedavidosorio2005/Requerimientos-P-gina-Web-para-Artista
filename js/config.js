@@ -18,7 +18,18 @@ const SITE_CONFIG = {
     social: {
         instagram: {
             username: 'boceto.juangiraldo',
-            url: 'https://www.instagram.com/boceto.juangiraldo'
+            url: 'https://www.instagram.com/boceto.juangiraldo?igsh=MTFpNGY1bnV6dnh0NA==',
+            
+            // INTEGRACIÓN AUTOMÁTICA DE INSTAGRAM 📸
+            // OPCIÓN 1: Widget Automático (YA ACTIVO) ✅
+            // El widget se actualiza automáticamente con tus últimas publicaciones
+            
+            // OPCIÓN 2: API de Instagram (Opcional - Para mayor control)
+            // Para activar: obtén tu token en https://developers.facebook.com/docs/instagram-basic-display-api
+            useAPI: false, // Cambiar a true para usar API
+            accessToken: null, // Tu Access Token aquí
+            userId: null, // Tu User ID aquí
+            maxPosts: 12 // Número de publicaciones a mostrar
         },
         facebook: '',  // Añade tu URL de Facebook
         twitter: '',   // Añade tu URL de Twitter
