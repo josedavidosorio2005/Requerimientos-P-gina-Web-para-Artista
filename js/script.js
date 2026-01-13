@@ -24,8 +24,12 @@ const CONFIG = {
 };
 
 // ============================================
-// LOADING SCREEN
+// LOADING SCREEN (Deshabilitado - carga instantánea)
 // ============================================
+// El loading screen está oculto por defecto en el HTML
+// Si quieres activarlo, quita style="display: none;" del HTML
+// y descomenta este código:
+/*
 window.addEventListener('load', () => {
     const loadingScreen = document.getElementById('loadingScreen');
     if (loadingScreen) {
@@ -34,6 +38,7 @@ window.addEventListener('load', () => {
         }, 500);
     }
 });
+*/
 
 // ============================================
 // NAVEGACIÓN STICKY Y RESPONSIVE
