@@ -2,7 +2,7 @@
  * Boceto Juan Giraldo - Página Web
  * Script principal con mejores prácticas de programación y seguridad
  * @author Juan Giraldo
- * @version 2.0
+ * @version 3.0
  */
 
 'use strict';
@@ -22,6 +22,204 @@ const CONFIG = {
         duration: 800
     }
 };
+
+// ============================================
+// LOADING SCREEN
+// ============================================
+window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+        }, 500);
+    }
+});
+
+// ============================================
+// NAVEGACIÓN STICKY Y RESPONSIVE
+// ============================================
+const navbar = document.getElementById('navbar');
+const navToggle = document.getElementById('navToggle');
+const navMenu = document.getElementById('navMenu');
+const navLinks = document.querySelectorAll('.nav-link');
+
+// Hacer navbar sticky con efecto
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > 100) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+    
+    lastScroll = currentScroll;
+});
+
+// Toggle menú móvil
+if (navToggle && navMenu) {
+    navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    });
+}
+
+// Cerrar menú al hacer click en enlaces
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        if (navMenu.classList.contains('active')) {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Smooth scroll
+        const href = link.getAttribute('href');
+        if (href.startsWith('#')) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                const offsetTop = target.offsetTop - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        
+        // Marcar link activo
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+    });
+});
+
+// Cerrar menú al hacer click fuera
+document.addEventListener('click', (e) => {
+    if (navMenu && navMenu.classList.contains('active')) {
+        if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+});
+
+// ============================================
+// SCROLL TO TOP BUTTON
+// ============================================
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('visible');
+    } else {
+        scrollToTopBtn.classList.remove('visible');
+    }
+});
+
+if (scrollToTopBtn) {
+    scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// ============================================
+// ANIMACIONES AL HACER SCROLL
+// ============================================
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+// Observar elementos para animar
+document.querySelectorAll('.gallery-item, .service-card, .product-card, .about-content, .contact-content').forEach(el => {
+    observer.observe(el);
+});
+
+// ============================================
+// LAZY LOADING DE IMÁGENES
+// ============================================
+if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                    img.classList.add('loaded');
+                    observer.unobserve(img);
+                }
+            }
+        });
+    });
+    
+    document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+    });
+}
+
+// ============================================
+// DETECCIÓN DE DISPOSITIVO Y ORIENTACIÓN
+// ============================================
+function detectDevice() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isMobile = /mobile|android|iphone|ipad|phone/i.test(userAgent);
+    const isTablet = /tablet|ipad/i.test(userAgent) && !isMobile;
+    
+    document.body.classList.toggle('is-mobile', isMobile);
+    document.body.classList.toggle('is-tablet', isTablet);
+    document.body.classList.toggle('is-desktop', !isMobile && !isTablet);
+}
+
+detectDevice();
+window.addEventListener('resize', detectDevice);
+
+// ============================================
+// MANEJO DE ORIENTACIÓN
+// ============================================
+function handleOrientation() {
+    const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+    document.body.classList.toggle('landscape', isLandscape);
+    document.body.classList.toggle('portrait', !isLandscape);
+}
+
+handleOrientation();
+window.addEventListener('orientationchange', handleOrientation);
+window.addEventListener('resize', handleOrientation);
+
+// ============================================
+// SMOOTH SCROLL PARA TODOS LOS ENLACES ANCLA
+// ============================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#' && href !== '#carrito' && href !== '#openTienda') {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                const offsetTop = target.offsetTop - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+});
 
 // Utilidades de seguridad
 const SecurityUtils = {
