@@ -389,69 +389,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <form class="contact-form" id="contactForm" novalidate>
-                    <div class="form-group">
-                        <input 
-                            type="text" 
-                            id="nombre" 
-                            name="nombre" 
-                            required 
-                            minlength="3"
-                            maxlength="100"
-                            pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
-                            aria-label="Nombre completo"
-                            autocomplete="name">
-                        <label for="nombre">Nombre Completo</label>
-                        <span class="error-message" role="alert"></span>
-                    </div>
-                    <div class="form-group">
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            required
-                            maxlength="100"
-                            aria-label="Correo electrónico"
-                            autocomplete="email">
-                        <label for="email">Email</label>
-                        <span class="error-message" role="alert"></span>
-                    </div>
-                    <div class="form-group">
-                        <input 
-                            type="tel" 
-                            id="telefono" 
-                            name="telefono" 
-                            required
-                            pattern="[0-9+\s-()]+"
-                            minlength="9"
-                            maxlength="20"
-                            aria-label="Número de teléfono"
-                            autocomplete="tel">
-                        <label for="telefono">Teléfono</label>
-                        <span class="error-message" role="alert"></span>
-                    </div>
-                    <div class="form-group">
-                        <textarea 
-                            id="mensaje" 
-                            name="mensaje" 
-                            rows="5" 
-                            required
-                            minlength="10"
-                            maxlength="500"
-                            aria-label="Descripción de tu idea de tatuaje"></textarea>
-                        <label for="mensaje">Cuéntame sobre tu idea de tatuaje</label>
-                        <span class="error-message" role="alert"></span>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary" id="submitBtn">
-                            <span class="btn-text">Enviar Mensaje</span>
-                            <span class="btn-loader" style="display:none;">
-                                <i class="fas fa-spinner fa-spin"></i> Enviando...
-                            </span>
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
     </section>

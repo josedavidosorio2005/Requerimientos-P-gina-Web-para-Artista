@@ -66,13 +66,7 @@ window.addEventListener('scroll', () => {
 });
 
 // Toggle menú móvil
-if (navToggle && navMenu) {
-    navToggle.addEventListener('click', () => {
-        navToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-    });
-}
+// Nota: El toggle del menú móvil se gestiona en la clase MobileNavigation
 
 // Cerrar menú al hacer click en enlaces
 navLinks.forEach(link => {
@@ -81,6 +75,7 @@ navLinks.forEach(link => {
             navToggle.classList.remove('active');
             navMenu.classList.remove('active');
             document.body.style.overflow = '';
+            navToggle.setAttribute('aria-expanded', 'false');
         }
         
         // Smooth scroll
@@ -101,17 +96,6 @@ navLinks.forEach(link => {
         navLinks.forEach(l => l.classList.remove('active'));
         link.classList.add('active');
     });
-});
-
-// Cerrar menú al hacer click fuera
-document.addEventListener('click', (e) => {
-    if (navMenu && navMenu.classList.contains('active')) {
-        if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-            navToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
 });
 
 // ============================================
@@ -638,18 +622,32 @@ class MobileNavigation {
                 this.close();
             }
         });
+
+        // Cerrar al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!this.isOpen()) return;
+            const target = e.target;
+            if (!this.navMenu.contains(target) && !this.navToggle.contains(target)) {
+                this.close();
+            }
+        });
+
+        // Estado inicial accesible
+        this.navToggle.setAttribute('aria-expanded', this.isOpen() ? 'true' : 'false');
     }
 
     toggle() {
         const isOpen = this.navMenu.classList.toggle('active');
         this.navToggle.classList.toggle('active');
         this.navToggle.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
     }
 
     close() {
         this.navMenu.classList.remove('active');
         this.navToggle.classList.remove('active');
         this.navToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
     }
 
     isOpen() {
@@ -989,67 +987,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 cart.clear();
                 carritoModal.close();
             }, 2000);
-        });
-    }
-
-    // Formulario de contacto
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        const validator = new FormValidator(contactForm);
-        
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            validator.clearErrors();
-
-            if (!validator.validate()) {
-                notificationSystem.show('Por favor, corrige los errores en el formulario', 'error');
-                return;
-            }
-
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = submitBtn.querySelector('.btn-text');
-            const btnLoader = submitBtn.querySelector('.btn-loader');
-
-            // Mostrar loader
-            submitBtn.disabled = true;
-            btnText.style.display = 'none';
-            btnLoader.style.display = 'inline-block';
-
-            try {
-                const formData = validator.getData();
-                console.log('Datos del formulario:', formData);
-
-                // Aquí podrías enviar a tu backend o email
-                // Ejemplo con WhatsApp:
-                // const phone = '34123456789';
-                // const text = `Nuevo contacto:\nNombre: ${formData.nombre}\nEmail: ${formData.email}\nTeléfono: ${formData.telefono}\nMensaje: ${formData.mensaje}`;
-                // window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
-
-                // Simular envío
-                await new Promise(resolve => setTimeout(resolve, 1500));
-
-                notificationSystem.show('¡Mensaje enviado! Te contactaré pronto.', 'success');
-                contactForm.reset();
-                validator.clearErrors();
-            } catch (error) {
-                console.error('Error:', error);
-                notificationSystem.show('Error al enviar. Inténtalo de nuevo.', 'error');
-            } finally {
-                // Restaurar botón
-                submitBtn.disabled = false;
-                btnText.style.display = 'inline';
-                btnLoader.style.display = 'none';
-            }
-        });
-
-        // Validación en tiempo real
-        contactForm.querySelectorAll('input, textarea').forEach(field => {
-            field.addEventListener('blur', () => {
-                if (field.value.trim()) {
-                    validator.clearErrors();
-                    validator.validate();
-                }
-            });
         });
     }
 
