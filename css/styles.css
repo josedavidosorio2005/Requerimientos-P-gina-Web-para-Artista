@@ -985,6 +985,225 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: flex-start;
     gap: 20px;
+    padding: 25px;
+    background: linear-gradient(145deg, rgba(20, 20, 30, 0.8), rgba(30, 20, 40, 0.6));
+    border-radius: 20px;
+    border: 2px solid rgba(255, 0, 110, 0.2);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.info-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 0, 110, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.info-item:hover::before {
+    left: 100%;
+}
+
+.info-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--neon-pink);
+    box-shadow: 
+        0 10px 30px rgba(255, 0, 110, 0.3),
+        0 5px 15px rgba(139, 92, 246, 0.2),
+        0 0 40px rgba(0, 245, 255, 0.1);
+}
+
+.info-item i {
+    font-size: 2rem;
+    color: var(--neon-pink);
+    min-width: 50px;
+    text-align: center;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.info-item h4 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: var(--light-color);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.info-item p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Enlaces de contacto */
+.contact-link {
+    color: var(--neon-blue);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    position: relative;
+}
+
+.contact-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+    transition: width 0.3s ease;
+}
+
+.contact-link:hover {
+    color: var(--neon-pink);
+    text-shadow: 0 0 10px rgba(255, 0, 110, 0.6);
+}
+
+.contact-link:hover::after {
+    width: 100%;
+}
+
+/* Badge de contacto */
+.contact-badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 15px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(255, 0, 110, 0.4);
+}
+
+/* Username de redes sociales */
+.social-username {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    color: var(--neon-pink) !important;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(255, 0, 110, 0.4);
+}
+
+/* Sección de redes sociales mejorada */
+.social-links-enhanced {
+    margin-top: 40px;
+    padding: 30px;
+    background: linear-gradient(145deg, rgba(15, 15, 25, 0.9), rgba(25, 15, 35, 0.8));
+    border-radius: 25px;
+    border: 2px solid rgba(255, 0, 110, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.social-links-enhanced h4 {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+    color: var(--light-color);
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.social-icons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.social-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background: linear-gradient(145deg, rgba(20, 20, 30, 0.8), rgba(30, 20, 40, 0.6));
+    border-radius: 20px;
+    border: 2px solid rgba(255, 0, 110, 0.2);
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+    z-index: 0;
+}
+
+.social-icon:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.social-icon i {
+    font-size: 2.5rem;
+    color: var(--neon-blue);
+    margin-bottom: 10px;
+    transition: all 0.4s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.social-icon span {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.4s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.social-icon:hover {
+    transform: translateY(-10px) scale(1.05);
+    border-color: var(--neon-pink);
+    box-shadow: 
+        0 15px 40px rgba(255, 0, 110, 0.5),
+        0 10px 25px rgba(139, 92, 246, 0.3),
+        0 0 50px rgba(0, 245, 255, 0.2);
+}
+
+.social-icon:hover i {
+    color: white;
+    transform: scale(1.2) rotateZ(360deg);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.social-icon:hover span {
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* WhatsApp especial con color verde */
+.social-whatsapp:hover {
+    border-color: #25D366;
+    box-shadow: 
+        0 15px 40px rgba(37, 211, 102, 0.5),
+        0 10px 25px rgba(37, 211, 102, 0.3),
+        0 0 50px rgba(37, 211, 102, 0.2);
+}
+
+.social-whatsapp i {
+    color: #25D366;
 }
 
 .info-icon {
@@ -1840,6 +2059,37 @@ img:not([data-src]) {
         font-size: 0.85rem;
     }
     
+    /* Contacto responsivo tablet/móvil */
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .info-item {
+        padding: 20px;
+    }
+    
+    .info-item i {
+        font-size: 1.8rem;
+    }
+    
+    .social-icons-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .social-icon {
+        padding: 20px;
+    }
+    
+    .social-icon i {
+        font-size: 2rem;
+    }
+    
+    .social-links-enhanced {
+        padding: 25px;
+    }
+    
     .contact-form {
         padding: 25px;
     }
@@ -1973,6 +2223,43 @@ img:not([data-src]) {
         padding: 10px 20px;
         font-size: 0.75rem;
         letter-spacing: 0.5px;
+    }
+    
+    /* Contacto responsivo móviles pequeños */
+    .info-item {
+        padding: 15px;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .info-item i {
+        font-size: 2rem;
+    }
+    
+    .social-icons-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .social-icon {
+        padding: 20px 15px;
+    }
+    
+    .social-icon i {
+        font-size: 2.2rem;
+    }
+    
+    .social-links-enhanced {
+        padding: 20px 15px;
+    }
+    
+    .social-links-enhanced h4 {
+        font-size: 1.1rem;
+    }
+    
+    .contact-link {
+        display: inline-block;
+        margin-top: 5px;
     }
     
     .btn {
