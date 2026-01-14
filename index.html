@@ -47,6 +47,19 @@
     <link rel="preconnect" href="https://www.instagram.com">
     
         <link rel="stylesheet" href="css/styles.min.css">
+    <link rel="stylesheet" href="css/tienda.css">
+    <style>
+        /* Fallback: si por alguna razón falla css/tienda.css,
+           evitamos que la tienda/carrito queden visibles ("duplicados"). */
+        #tiendaOverlay,
+        .modal {
+            display: none;
+        }
+        #tiendaOverlay.active,
+        .modal.active {
+            display: flex;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
         <script type="application/ld+json">
@@ -82,6 +95,17 @@
                 <li><a href="#galeria" class="nav-link">Galería</a></li>
                 <li><a href="#servicios" class="nav-link">Servicios</a></li>
                 <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                <li>
+                    <button type="button" id="openTienda" class="btn-tienda" aria-label="Abrir tienda">
+                        <i class="fas fa-store" aria-hidden="true"></i> Tienda
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="carrito-icon" aria-label="Abrir carrito">
+                        <i class="fas fa-shopping-cart" aria-hidden="true"></i> Carrito
+                        <span id="carritoCount" aria-label="0 productos en el carrito">0</span>
+                    </button>
+                </li>
                 <li><a href="https://www.instagram.com/boceto.juangiraldo?igsh=MTFpNGY1bnV6dnh0NA==" target="_blank" rel="noopener noreferrer" class="btn-instagram"><i class="fab fa-instagram"></i> Instagram</a></li>
             </ul>
         </div>
@@ -345,6 +369,102 @@
             </div>
         </div>
     </footer>
+
+    <!-- TIENDA: Overlay ("otra ventana") -->
+    <div id="tiendaOverlay" class="tienda-overlay" aria-hidden="true">
+        <div class="tienda-panel" role="dialog" aria-modal="true" aria-label="Tienda">
+            <div class="tienda-header">
+                <h2>Compra / Reservas</h2>
+                <button type="button" id="closeTienda" class="tienda-close" aria-label="Cerrar tienda">&times;</button>
+            </div>
+
+            <p class="tienda-subtitle">Selecciona un servicio o producto y agrégalo al carrito.</p>
+
+            <div class="tienda-categorias" role="tablist" aria-label="Categorías">
+                <button type="button" class="categoria-btn active" data-categoria="todos" aria-pressed="true">Todos</button>
+                <button type="button" class="categoria-btn" data-categoria="servicio" aria-pressed="false">Servicios</button>
+                <button type="button" class="categoria-btn" data-categoria="producto" aria-pressed="false">Productos</button>
+                <button type="button" class="categoria-btn" data-categoria="bono" aria-pressed="false">Bonos</button>
+            </div>
+
+            <div class="tienda-grid">
+                <article class="producto-card-modern product-card" data-categoria="servicio">
+                    <div class="producto-thumb">
+                        <img src="images/gallery/dibujo1.jpg" alt="Diseño personalizado" loading="lazy" decoding="async">
+                    </div>
+                    <div class="product-info">
+                        <h3>Diseño Personalizado</h3>
+                        <p class="producto-desc">Diseño único creado para tu idea y ubicación.</p>
+                        <div class="product-price producto-precio">€80</div>
+                        <button type="button" class="btn btn-primary btn-comprar-modern"><i class="fas fa-shopping-cart"></i> Añadir</button>
+                    </div>
+                </article>
+
+                <article class="producto-card-modern product-card" data-categoria="servicio">
+                    <div class="producto-thumb">
+                        <img src="images/gallery/dibujo2.jpg" alt="Consulta de diseño" loading="lazy" decoding="async">
+                    </div>
+                    <div class="product-info">
+                        <h3>Consulta de Diseño</h3>
+                        <p class="producto-desc">1 hora para definir estilo, tamaño y presupuesto.</p>
+                        <div class="product-price producto-precio">€40</div>
+                        <button type="button" class="btn btn-primary btn-comprar-modern"><i class="fas fa-shopping-cart"></i> Añadir</button>
+                    </div>
+                </article>
+
+                <article class="producto-card-modern product-card" data-categoria="bono">
+                    <div class="producto-thumb">
+                        <img src="images/gallery/dibujo3.jpg" alt="Bono regalo" loading="lazy" decoding="async">
+                    </div>
+                    <div class="product-info">
+                        <h3>Bono Regalo (1 Sesión)</h3>
+                        <p class="producto-desc">Ideal para regalar. Válido por 6 meses.</p>
+                        <div class="product-price producto-precio">€150</div>
+                        <button type="button" class="btn btn-primary btn-comprar-modern"><i class="fas fa-shopping-cart"></i> Añadir</button>
+                    </div>
+                </article>
+
+                <article class="producto-card-modern product-card" data-categoria="producto">
+                    <div class="producto-thumb">
+                        <img src="images/gallery/dibujo4.jpg" alt="Kit post-tatuaje" loading="lazy" decoding="async">
+                    </div>
+                    <div class="product-info">
+                        <h3>Kit Cuidado Post‑Tatuaje</h3>
+                        <p class="producto-desc">Recomendado para curación y mejor resultado.</p>
+                        <div class="product-price producto-precio">€35</div>
+                        <button type="button" class="btn btn-primary btn-comprar-modern"><i class="fas fa-shopping-cart"></i> Añadir</button>
+                    </div>
+                </article>
+            </div>
+
+            <div class="tienda-footnote">
+                <p>La compra se finaliza por mensaje/WhatsApp para coordinar detalles.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Carrito -->
+    <div class="modal" id="carritoModal" aria-hidden="true" role="dialog" aria-label="Carrito de compras">
+        <div class="carrito-modal-box">
+            <button class="modal-close" aria-label="Cerrar carrito">&times;</button>
+            <h3>Tu carrito</h3>
+            <div id="carritoItems"></div>
+            <div class="carrito-resumen">
+                <div class="carrito-linea">
+                    <span>Subtotal</span>
+                    <strong id="subtotalCarrito">€0</strong>
+                </div>
+                <div class="carrito-linea total">
+                    <span>Total</span>
+                    <strong id="totalCarrito">€0</strong>
+                </div>
+            </div>
+            <div class="carrito-actions">
+                <button type="button" class="btn btn-primary" id="finalizarCompra">Finalizar compra</button>
+            </div>
+            <p class="carrito-nota">Al finalizar, te contactaremos para confirmar detalles.</p>
+        </div>
+    </div>
 
     <!-- Modal for Gallery -->
     <div class="modal" id="galleryModal">

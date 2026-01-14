@@ -1,0 +1,360 @@
+/* Tienda (overlay) + Modales (carrito/galería)
+   Este archivo existe para no tocar el CSS minificado.
+*/
+
+/* ===== Modales genéricos (galleryModal + carritoModal) ===== */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    z-index: 10000;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 28px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* Gallery modal content (mantener simple) */
+#galleryModal .modal-content {
+    max-width: min(980px, 92vw);
+    max-height: 82vh;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+}
+
+#galleryModal #modalImage {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* ===== Carrito ===== */
+.carrito-modal-box {
+    position: relative;
+    width: min(720px, 92vw);
+    max-height: 82vh;
+    overflow: auto;
+    border-radius: 22px;
+    padding: 24px;
+    background: linear-gradient(145deg, rgba(15, 15, 25, 0.95), rgba(30, 20, 40, 0.92));
+    border: 2px solid rgba(255, 0, 110, 0.25);
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.65), 0 0 50px rgba(255, 0, 110, 0.15);
+}
+
+.carrito-modal-box h3 {
+    margin: 0 0 16px;
+    font-size: 1.6rem;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+#carritoItems {
+    display: grid;
+    gap: 12px;
+    margin: 16px 0 20px;
+}
+
+.carrito-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.carrito-item h4,
+.carrito-item .item-nombre {
+    margin: 0;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.carrito-item p,
+.carrito-item .item-precio {
+    margin: 4px 0 0;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.btn-remove,
+.item-eliminar {
+    border: 0;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: rgba(255, 0, 110, 0.18);
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.btn-remove:hover,
+.item-eliminar:hover {
+    background: rgba(255, 0, 110, 0.28);
+}
+
+/* Cantidades (CartMejorado) */
+.item-cantidad {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.cantidad-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    border: 0;
+    cursor: pointer;
+    background: rgba(0, 245, 255, 0.14);
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.cantidad-btn:hover {
+    background: rgba(0, 245, 255, 0.22);
+}
+
+.cantidad-num {
+    min-width: 22px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.carrito-resumen {
+    margin-top: 10px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: grid;
+    gap: 10px;
+}
+
+.carrito-linea {
+    display: flex;
+    justify-content: space-between;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.carrito-linea.total {
+    font-size: 1.15rem;
+}
+
+.carrito-actions {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.carrito-nota {
+    margin: 12px 0 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+}
+
+/* ===== Tienda overlay (otra ventana) ===== */
+.tienda-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    padding: 22px;
+}
+
+.tienda-overlay.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tienda-panel {
+    width: min(1100px, 96vw);
+    max-height: 86vh;
+    overflow: auto;
+    border-radius: 26px;
+    padding: 22px;
+    background: linear-gradient(145deg, rgba(10, 10, 18, 0.96), rgba(30, 15, 40, 0.93));
+    border: 2px solid rgba(139, 92, 246, 0.25);
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.7), 0 0 60px rgba(139, 92, 246, 0.18);
+}
+
+.tienda-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.tienda-header h2 {
+    margin: 0;
+    font-size: 1.9rem;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.tienda-close {
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 30px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.tienda-close:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.tienda-subtitle {
+    margin: 8px 0 16px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.tienda-categorias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 6px 0 18px;
+}
+
+.categoria-btn {
+    border: 0;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.categoria-btn.active {
+    background: linear-gradient(135deg, rgba(255, 0, 110, 0.85), rgba(139, 92, 246, 0.85));
+}
+
+.tienda-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.producto-card-modern {
+    background: linear-gradient(145deg, rgba(20, 20, 20, 0.92), rgba(40, 20, 50, 0.78));
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55), 0 0 28px rgba(255, 0, 110, 0.10);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    border-radius: 22px;
+}
+
+.producto-card-modern:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255, 0, 110, 0.35);
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.65), 0 0 40px rgba(255, 0, 110, 0.16);
+}
+
+.producto-thumb {
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+}
+
+.producto-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(1.05) contrast(1.02);
+}
+
+.producto-desc {
+    margin: 6px 0 12px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.5;
+}
+
+.producto-card-modern .product-info h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.producto-card-modern .product-price {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: rgba(255, 0, 110, 0.95);
+    margin-bottom: 12px;
+}
+
+/* Botón Tienda en navbar */
+.btn-tienda {
+    background: linear-gradient(135deg, rgba(0, 245, 255, 0.75), rgba(139, 92, 246, 0.75));
+    color: rgba(255, 255, 255, 0.95);
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    border: 0;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0, 245, 255, 0.22);
+}
+
+.btn-tienda,
+.carrito-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.carrito-icon {
+    border: 0;
+    cursor: pointer;
+}
+
+.btn-tienda:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 245, 255, 0.30);
+}
+
+.tienda-footnote {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 520px) {
+    .tienda-panel {
+        padding: 16px;
+    }
+
+    .carrito-modal-box {
+        padding: 18px;
+    }
+}

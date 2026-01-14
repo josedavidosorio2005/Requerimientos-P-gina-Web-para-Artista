@@ -380,6 +380,51 @@ class NotificationSystem {
 
 const notificationSystem = new NotificationSystem();
 
+// Helpers: moneda y parseo de precios (soporta €, $, COP, separadores . y ,)
+function getCurrencySymbol() {
+    if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.cart && SITE_CONFIG.cart.currency) {
+        return SITE_CONFIG.cart.currency;
+    }
+    return '€';
+}
+
+function parsePriceToNumber(value) {
+    if (value == null) return 0;
+    const raw = String(value).trim();
+    const cleaned = raw.replace(/[^0-9,.-]/g, '');
+    if (!cleaned) return 0;
+
+    const lastDot = cleaned.lastIndexOf('.');
+    const lastComma = cleaned.lastIndexOf(',');
+
+    let normalized = cleaned;
+
+    // Si hay ambos separadores, el último suele ser el decimal.
+    if (lastDot !== -1 && lastComma !== -1) {
+        const decimalSep = lastDot > lastComma ? '.' : ',';
+        const thousandSep = decimalSep === '.' ? ',' : '.';
+        normalized = normalized.split(thousandSep).join('');
+        normalized = normalized.replace(decimalSep, '.');
+    } else if (lastComma !== -1) {
+        // Solo coma: decimal si termina en ,d o ,dd; si no, es separador de miles.
+        const decimals = normalized.split(',').pop();
+        if (decimals && decimals.length <= 2) {
+            normalized = normalized.replace(',', '.');
+        } else {
+            normalized = normalized.split(',').join('');
+        }
+    } else if (lastDot !== -1) {
+        // Solo punto: decimal si termina en .d o .dd; si no, es separador de miles.
+        const decimals = normalized.split('.').pop();
+        if (!(decimals && decimals.length <= 2)) {
+            normalized = normalized.split('.').join('');
+        }
+    }
+
+    const number = parseFloat(normalized);
+    return Number.isFinite(number) ? number : 0;
+}
+
 // Sistema de carrito de compras
 class ShoppingCart {
     constructor() {
@@ -449,11 +494,11 @@ class ShoppingCart {
 
     /**
      * Calcula total del carrito
-     * @returns {number} Total en euros
+     * @returns {number} Total numérico
      */
     getTotal() {
         return this.items.reduce((sum, item) => {
-            const precio = parseFloat(item.precio.replace('€', '')) || 0;
+            const precio = parsePriceToNumber(item.precio);
             return sum + precio;
         }, 0);
     }
@@ -476,6 +521,8 @@ class ShoppingCart {
         const container = document.getElementById('carritoItems');
         const totalElement = document.getElementById('totalCarrito');
 
+        const currency = getCurrencySymbol();
+
         if (!container || !totalElement) return;
 
         if (this.items.length === 0) {
@@ -485,7 +532,7 @@ class ShoppingCart {
                     <p>Tu carrito está vacío</p>
                 </div>
             `;
-            totalElement.textContent = '€0.00';
+            totalElement.textContent = `${currency}0.00`;
             return;
         }
 
@@ -504,11 +551,11 @@ class ShoppingCart {
             </div>
         `).join('');
 
-        totalElement.textContent = `€${this.getTotal().toFixed(2)}`;
+        totalElement.textContent = `${currency}${this.getTotal().toFixed(2)}`;
     }
 }
 
-const cart = new ShoppingCart();
+    let cart = new ShoppingCart();
 
 // Sistema de validación de formularios
 class FormValidator {
@@ -1151,8 +1198,16 @@ class CheckoutController {
         const seguirComprando = document.getElementById('seguirComprando');
         if (seguirComprando) {
             seguirComprando.addEventListener('click', () => {
-                document.getElementById('carritoModal').style.display = 'none';
-                document.getElementById('tiendaOverlay').classList.add('active');
+                const carritoEl = document.getElementById('carritoModal');
+                if (carritoEl) {
+                    carritoEl.classList.remove('active');
+                    carritoEl.setAttribute('aria-hidden', 'true');
+                    carritoEl.style.display = '';
+                }
+                const tiendaEl = document.getElementById('tiendaOverlay');
+                if (tiendaEl) {
+                    tiendaEl.classList.add('active');
+                }
             });
         }
         
@@ -1172,7 +1227,9 @@ class CheckoutController {
         const cerrarConfirmacion = document.getElementById('cerrarConfirmacion');
         if (cerrarConfirmacion) {
             cerrarConfirmacion.addEventListener('click', () => {
-                this.confirmacionModal.style.display = 'none';
+                if (this.confirmacionModal) {
+                    this.confirmacionModal.style.display = 'none';
+                }
                 document.body.style.overflow = '';
             });
         }
@@ -1185,19 +1242,28 @@ class CheckoutController {
         }
         
         // Cerrar carrito
-        document.getElementById('carritoModal').style.display = 'none';
+        const carritoEl = document.getElementById('carritoModal');
+        if (carritoEl) {
+            carritoEl.classList.remove('active');
+            carritoEl.setAttribute('aria-hidden', 'true');
+            carritoEl.style.display = '';
+        }
         
         // Renderizar items en checkout
         this.renderCheckoutItems();
         
         // Abrir modal checkout
-        this.checkoutModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+        if (this.checkoutModal) {
+            this.checkoutModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
     }
     
     cerrarCheckout() {
-        this.checkoutModal.style.display = 'none';
-        document.body.style.overflow = '';
+        if (this.checkoutModal) {
+            this.checkoutModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
     }
     
     renderCheckoutItems() {
@@ -1220,11 +1286,12 @@ class CheckoutController {
     }
     
     calcularTotal() {
+        const currency = getCurrencySymbol();
         const total = cart.items.reduce((sum, item) => {
-            const precio = parseFloat(item.precio.replace('€', '').trim());
+            const precio = parsePriceToNumber(item.precio);
             return sum + (precio * item.cantidad);
         }, 0);
-        return `€${total.toFixed(2)}`;
+        return `${currency}${total.toFixed(2)}`;
     }
     
     procesarPedido(e) {
@@ -1366,13 +1433,15 @@ class CartMejorado {
         const carritoItems = document.getElementById('carritoItems');
         const totalElement = document.getElementById('totalCarrito');
         const subtotalElement = document.getElementById('subtotalCarrito');
+
+        const currency = getCurrencySymbol();
         
         if (!carritoItems) return;
         
         if (this.items.length === 0) {
             carritoItems.innerHTML = '<p style="color: rgba(255,255,255,0.7); text-align: center; padding: 40px;">Tu carrito está vacío</p>';
-            if (totalElement) totalElement.textContent = '€0';
-            if (subtotalElement) subtotalElement.textContent = '€0';
+            if (totalElement) totalElement.textContent = `${currency}0`;
+            if (subtotalElement) subtotalElement.textContent = `${currency}0`;
             return;
         }
         
@@ -1394,18 +1463,23 @@ class CartMejorado {
         `).join('');
         
         const total = this.items.reduce((sum, item) => {
-            const precio = parseFloat(item.precio.replace('€', '').trim());
+            const precio = parsePriceToNumber(item.precio);
             return sum + (precio * item.cantidad);
         }, 0);
         
-        if (totalElement) totalElement.textContent = `€${total.toFixed(2)}`;
-        if (subtotalElement) subtotalElement.textContent = `€${total.toFixed(2)}`;
+        if (totalElement) totalElement.textContent = `${currency}${total.toFixed(2)}`;
+        if (subtotalElement) subtotalElement.textContent = `${currency}${total.toFixed(2)}`;
     }
 }
 
 // Reemplazar el carrito existente
 if (typeof cart !== 'undefined') {
     cart = new CartMejorado();
+}
+
+// Mantener export global consistente (por si se usa BJ.cart en otros scripts)
+if (window.BJ) {
+    window.BJ.cart = cart;
 }
 
 // Inicializar checkout
