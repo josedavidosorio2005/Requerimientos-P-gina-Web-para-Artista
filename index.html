@@ -491,7 +491,8 @@
                 </div>
             </div>
             <div class="carrito-actions">
-                <button type="button" class="btn btn-primary" id="finalizarCompra">Finalizar compra</button>
+                <button type="button" class="btn btn-outline" id="irCheckout">Completar datos</button>
+                <button type="button" class="btn btn-primary" id="finalizarCompra">Enviar por WhatsApp</button>
             </div>
 
             <div class="paypal-section" id="paypalSection" hidden>
@@ -505,6 +506,75 @@
                 <p>Actívalo en <code>js/config.js</code> (paypal.enabled + paypal.clientId).</p>
             </div>
             <p class="carrito-nota">Al finalizar, te contactaremos para confirmar detalles.</p>
+        </div>
+    </div>
+
+    <!-- Modal: Checkout (datos + envío a WhatsApp) -->
+    <div class="modal" id="checkoutModal" aria-hidden="true" role="dialog" aria-label="Checkout">
+        <div class="checkout-modal-box">
+            <button class="modal-close" id="checkoutClose" aria-label="Cerrar checkout">&times;</button>
+            <h3>Completar compra</h3>
+            <p class="checkout-kicker">Rellena tus datos y envía el pedido por WhatsApp.</p>
+
+            <div id="checkoutItems" class="checkout-items"></div>
+
+            <div class="checkout-resumen">
+                <div class="carrito-linea">
+                    <span>Subtotal</span>
+                    <strong id="checkoutSubtotal">€0</strong>
+                </div>
+                <div class="carrito-linea total">
+                    <span>Total</span>
+                    <strong id="checkoutTotal">€0</strong>
+                </div>
+            </div>
+
+            <form id="checkoutFormulario" class="checkout-form">
+                <div class="checkout-grid">
+                    <label>
+                        <span>Nombre completo *</span>
+                        <input type="text" name="nombre" autocomplete="name" required>
+                    </label>
+                    <label>
+                        <span>Teléfono (WhatsApp) *</span>
+                        <input type="tel" name="telefono" autocomplete="tel" required>
+                    </label>
+                    <label>
+                        <span>Email (opcional)</span>
+                        <input type="email" name="email" autocomplete="email">
+                    </label>
+                    <label>
+                        <span>Ciudad *</span>
+                        <input type="text" name="ciudad" autocomplete="address-level2" required>
+                    </label>
+                    <label class="checkout-full">
+                        <span>Dirección (si necesitas envío)</span>
+                        <input type="text" name="direccion" autocomplete="street-address" placeholder="Barrio, calle, número, referencias">
+                    </label>
+                    <label class="checkout-full">
+                        <span>Notas (opcional)</span>
+                        <textarea name="notas" rows="3" placeholder="Tamaño, ideas, fecha preferida, etc."></textarea>
+                    </label>
+                </div>
+
+                <input type="hidden" name="metodo" value="whatsapp">
+
+                <div class="checkout-actions">
+                    <button type="button" class="btn btn-outline" id="seguirComprando">Seguir comprando</button>
+                    <button type="submit" class="btn btn-primary">Enviar pedido a WhatsApp</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Confirmación -->
+    <div class="modal" id="confirmacionModal" aria-hidden="true" role="dialog" aria-label="Confirmación">
+        <div class="confirm-modal-box">
+            <button class="modal-close" id="cerrarConfirmacion" aria-label="Cerrar confirmación">&times;</button>
+            <h3>¡Pedido listo!</h3>
+            <p class="confirm-kicker">Número de pedido:</p>
+            <p class="confirm-code"><strong id="numeroPedido">BJ00000000</strong></p>
+            <p class="confirm-hint">Si WhatsApp no se abrió, revisa tu bloqueador de popups.</p>
         </div>
     </div>
 

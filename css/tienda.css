@@ -207,6 +207,119 @@
     color: rgba(255, 255, 255, 0.85);
 }
 
+/* ===== Checkout + Confirmación ===== */
+.checkout-modal-box,
+.confirm-modal-box {
+    position: relative;
+    width: min(780px, 92vw);
+    max-height: 86vh;
+    overflow: auto;
+    border-radius: 22px;
+    padding: 24px;
+    background: linear-gradient(145deg, rgba(15, 15, 25, 0.95), rgba(30, 20, 40, 0.92));
+    border: 2px solid rgba(0, 245, 255, 0.18);
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.65), 0 0 50px rgba(0, 245, 255, 0.10);
+}
+
+.checkout-modal-box h3,
+.confirm-modal-box h3 {
+    margin: 0 0 10px;
+    font-size: 1.6rem;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.checkout-kicker,
+.confirm-kicker {
+    margin: 0 0 14px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.checkout-items {
+    display: grid;
+    gap: 10px;
+    margin: 12px 0 14px;
+}
+
+.checkout-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.checkout-resumen {
+    margin: 10px 0 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: grid;
+    gap: 10px;
+}
+
+.checkout-form input,
+.checkout-form textarea {
+    width: 100%;
+    margin-top: 6px;
+    padding: 12px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.25);
+    color: rgba(255, 255, 255, 0.92);
+    outline: none;
+}
+
+.checkout-form input:focus,
+.checkout-form textarea:focus {
+    border-color: rgba(0, 245, 255, 0.35);
+    box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.12);
+}
+
+.checkout-form label > span {
+    display: block;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+}
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.checkout-full {
+    grid-column: 1 / -1;
+}
+
+.checkout-actions {
+    margin-top: 14px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.confirm-code {
+    margin: 0 0 10px;
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.confirm-hint {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+}
+
+@media (max-width: 720px) {
+    .checkout-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ===== Tienda overlay (otra ventana) ===== */
 .tienda-overlay {
     position: fixed;

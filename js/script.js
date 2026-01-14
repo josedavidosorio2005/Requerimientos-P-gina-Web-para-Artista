@@ -408,6 +408,40 @@ function formatAmount(value, currencyCode) {
     return rounded.toFixed(decimals);
 }
 
+function getBusinessWhatsAppPhone() {
+    const fromSocial =
+        (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.social && SITE_CONFIG.social.whatsapp)
+            ? String(SITE_CONFIG.social.whatsapp).trim()
+            : '';
+
+    const fromWhatsappCfg =
+        (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.whatsapp && SITE_CONFIG.whatsapp.businessPhone)
+            ? String(SITE_CONFIG.whatsapp.businessPhone).trim()
+            : '';
+
+    return fromSocial || fromWhatsappCfg;
+}
+
+function getNormalizedCart(cartInstance) {
+    const currencySymbol = getCurrencySymbol();
+    const currencyCode = getCurrencyCode();
+
+    const rawItems = (cartInstance && Array.isArray(cartInstance.items)) ? cartInstance.items : [];
+
+    const items = rawItems
+        .map((it) => {
+            const name = (it && it.nombre) ? String(it.nombre) : 'Producto';
+            const qty = Number(it && it.cantidad != null ? it.cantidad : 1);
+            const quantity = Math.max(1, Math.floor(qty));
+            const unitAmount = Math.max(0, parsePriceToNumber(it && it.precio));
+            return { name, quantity, unitAmount };
+        })
+        .filter((it) => it.quantity >= 1);
+
+    const total = items.reduce((sum, it) => sum + (it.unitAmount * it.quantity), 0);
+    return { items, total, currencyCode, currencySymbol };
+}
+
 function parsePriceToNumber(value) {
     if (value == null) return 0;
     const raw = String(value).trim();
@@ -1058,30 +1092,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function buildPayPalItems() {
-        // Normalizar items (CartMejorado usa cantidad; ShoppingCart no)
-        const items = (cart && Array.isArray(cart.items)) ? cart.items : [];
-        const currencyCode = getCurrencyCode();
-
-        const normalized = items
-            .map((it) => {
-                const name = (it && it.nombre) ? String(it.nombre) : 'Producto';
-                const qty = Number(it && it.cantidad != null ? it.cantidad : 1);
-                const quantity = Math.max(1, Math.floor(qty));
-                const unit = parsePriceToNumber(it && it.precio);
-                return {
-                    name,
-                    quantity,
-                    unitAmount: Math.max(0, unit),
-                    currencyCode
-                };
-            })
-            .filter((it) => it.unitAmount >= 0 && it.quantity >= 1);
-
-        const itemTotal = normalized.reduce((sum, it) => sum + (it.unitAmount * it.quantity), 0);
-        return { normalized, itemTotal, currencyCode };
-    }
-
     async function renderPayPalButtons() {
         const cfg = getPayPalConfig();
         if (!paypalSection || !paypalButtonsContainer) return;
@@ -1096,8 +1106,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const { normalized, itemTotal, currencyCode } = buildPayPalItems();
-        if (!normalized.length || itemTotal <= 0) {
+        const cartData = getNormalizedCart(cart);
+        if (!cartData.items.length || cartData.total <= 0) {
             return;
         }
 
@@ -1113,7 +1123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         paypalButtonsContainer.innerHTML = '';
         paypalSection.hidden = false;
 
-        const amountValue = formatAmount(itemTotal, currencyCode);
+        const amountValue = formatAmount(cartData.total, cartData.currencyCode);
 
         window.paypal
             .Buttons({
@@ -1127,7 +1137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         purchase_units: [
                             {
                                 amount: {
-                                    currency_code: currencyCode,
+                                    currency_code: cartData.currencyCode,
                                     value: amountValue
                                 },
                                 description: 'Compra - Boceto Juan Giraldo'
@@ -1192,35 +1202,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const finalizarCompra = document.getElementById('finalizarCompra');
     if (finalizarCompra) {
         finalizarCompra.addEventListener('click', () => {
-            if (cart.items.length === 0) {
-                notificationSystem.show('El carrito está vacío', 'error');
-                return;
+            // Para compra "del todo": pedir datos en checkout (y desde el WhatsApp del cliente se envía al negocio)
+            if (typeof checkoutController !== 'undefined' && checkoutController) {
+                checkoutController.abrirCheckout();
             }
-
-            const whatsappPhone =
-                (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.social && SITE_CONFIG.social.whatsapp) ? SITE_CONFIG.social.whatsapp :
-                (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.whatsapp && SITE_CONFIG.whatsapp.businessPhone) ? SITE_CONFIG.whatsapp.businessPhone :
-                '';
-
-            const { normalized, itemTotal, currencyCode } = buildPayPalItems();
-            const currencySymbol = getCurrencySymbol();
-            const totalText = `${currencySymbol}${formatAmount(itemTotal, currencyCode)}`;
-
-            const productosTxt = normalized.map(it => `• ${it.name} x${it.quantity}`).join('\n');
-            const text = `Hola! Quiero comprar:\n${productosTxt}\n\nTotal: ${totalText}`;
-
-            if (!whatsappPhone) {
-                notificationSystem.show('Configura tu WhatsApp en js/config.js para finalizar por mensaje.', 'info');
-                return;
-            }
-
-            window.open(`https://wa.me/${encodeURIComponent(whatsappPhone)}?text=${encodeURIComponent(text)}`, '_blank');
-            notificationSystem.show('Abriendo WhatsApp para finalizar la compra…', 'success');
-            
-            setTimeout(() => {
-                cart.clear();
-                carritoModal.close();
-            }, 2000);
         });
     }
 
@@ -1427,7 +1412,8 @@ class CheckoutController {
         if (cerrarConfirmacion) {
             cerrarConfirmacion.addEventListener('click', () => {
                 if (this.confirmacionModal) {
-                    this.confirmacionModal.style.display = 'none';
+                    this.confirmacionModal.classList.remove('active');
+                    this.confirmacionModal.setAttribute('aria-hidden', 'true');
                 }
                 document.body.style.overflow = '';
             });
@@ -1435,7 +1421,8 @@ class CheckoutController {
     }
     
     abrirCheckout() {
-        if (cart.items.length === 0) {
+        const cartData = getNormalizedCart(cart);
+        if (!cartData.items.length) {
             notificationSystem.show('El carrito está vacío', 'error');
             return;
         }
@@ -1453,14 +1440,16 @@ class CheckoutController {
         
         // Abrir modal checkout
         if (this.checkoutModal) {
-            this.checkoutModal.style.display = 'flex';
+            this.checkoutModal.classList.add('active');
+            this.checkoutModal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
         }
     }
     
     cerrarCheckout() {
         if (this.checkoutModal) {
-            this.checkoutModal.style.display = 'none';
+            this.checkoutModal.classList.remove('active');
+            this.checkoutModal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
         }
     }
@@ -1471,26 +1460,24 @@ class CheckoutController {
         const checkoutTotal = document.getElementById('checkoutTotal');
         
         if (!checkoutItems) return;
-        
-        checkoutItems.innerHTML = cart.items.map(item => `
+
+        const cartData = getNormalizedCart(cart);
+        const totalText = `${cartData.currencySymbol}${formatAmount(cartData.total, cartData.currencyCode)}`;
+
+        checkoutItems.innerHTML = cartData.items.map(item => `
             <div class='checkout-item'>
-                <span>${item.nombre} x${item.cantidad}</span>
-                <span>${item.precio}</span>
+                <span>${item.name} x${item.quantity}</span>
+                <span>${cartData.currencySymbol}${formatAmount(item.unitAmount * item.quantity, cartData.currencyCode)}</span>
             </div>
         `).join('');
-        
-        const total = this.calcularTotal();
-        checkoutSubtotal.textContent = total;
-        checkoutTotal.textContent = total;
+
+        if (checkoutSubtotal) checkoutSubtotal.textContent = totalText;
+        if (checkoutTotal) checkoutTotal.textContent = totalText;
     }
     
     calcularTotal() {
-        const currency = getCurrencySymbol();
-        const total = cart.items.reduce((sum, item) => {
-            const precio = parsePriceToNumber(item.precio);
-            return sum + (precio * item.cantidad);
-        }, 0);
-        return `${currency}${total.toFixed(2)}`;
+        const cartData = getNormalizedCart(cart);
+        return `${cartData.currencySymbol}${formatAmount(cartData.total, cartData.currencyCode)}`;
     }
     
     procesarPedido(e) {
@@ -1508,19 +1495,29 @@ class CheckoutController {
         };
         
         // Validar campos
-        if (!datos.nombre || !datos.email || !datos.telefono || !datos.ciudad) {
-            notificationSystem.show('Por favor completa todos los campos obligatorios', 'error');
+        if (!datos.nombre || !datos.telefono || !datos.ciudad) {
+            notificationSystem.show('Por favor completa nombre, teléfono y ciudad', 'error');
+            return;
+        }
+
+        if (!SecurityUtils.validateName(String(datos.nombre).trim())) {
+            notificationSystem.show('Nombre inválido', 'error');
+            return;
+        }
+        if (!SecurityUtils.validatePhone(String(datos.telefono).trim())) {
+            notificationSystem.show('Teléfono inválido', 'error');
             return;
         }
         
         // Generar número de pedido
         const numeroPedido = 'BJ' + Date.now().toString().slice(-8);
         
-        // Preparar mensaje
-        const productos = cart.items.map(item => 
-            `${item.nombre} x${item.cantidad} - ${item.precio}`
-        ).join('\n');
-        
+        const cartData = getNormalizedCart(cart);
+        const productos = cartData.items.map(item => {
+            const lineTotal = `${cartData.currencySymbol}${formatAmount(item.unitAmount * item.quantity, cartData.currencyCode)}`;
+            return `${item.name} x${item.quantity} - ${lineTotal}`;
+        }).join('\n');
+
         const total = this.calcularTotal();
         
         const mensaje = `
@@ -1533,7 +1530,7 @@ ${productos}
 
 👤 *Cliente:*
 Nombre: ${datos.nombre}
-Email: ${datos.email}
+${datos.email ? 'Email: ' + datos.email : ''}
 Teléfono: ${datos.telefono}
 Ciudad: ${datos.ciudad}
 ${datos.direccion ? 'Dirección: ' + datos.direccion : ''}
@@ -1542,22 +1539,22 @@ ${datos.notas ? '📝 Notas: ' + datos.notas : ''}
         `.trim();
         
         // Enviar según método elegido
-        if (datos.metodo === 'whatsapp') {
-            const phone = '34600000000'; // Cambiar por tu número
-            const url = `https://wa.me/${phone}?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, '_blank');
-        } else {
-            // Crear mailto
-            const subject = `Nuevo Pedido #${numeroPedido}`;
-            const body = mensaje.replace(/\*/g, '');
-            const mailtoUrl = `mailto:contacto@ejemplo.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoUrl;
+        const phone = getBusinessWhatsAppPhone();
+        if (!phone) {
+            notificationSystem.show('Falta configurar el WhatsApp del negocio en js/config.js', 'error');
+            return;
         }
+
+        const url = `https://wa.me/${encodeURIComponent(phone)}?text=${encodeURIComponent(mensaje)}`;
+        window.open(url, '_blank');
         
         // Mostrar confirmación
         document.getElementById('numeroPedido').textContent = numeroPedido;
         this.cerrarCheckout();
-        this.confirmacionModal.style.display = 'flex';
+        if (this.confirmacionModal) {
+            this.confirmacionModal.classList.add('active');
+            this.confirmacionModal.setAttribute('aria-hidden', 'false');
+        }
         
         // Limpiar carrito
         setTimeout(() => {
