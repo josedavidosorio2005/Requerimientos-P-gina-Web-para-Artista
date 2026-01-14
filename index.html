@@ -31,6 +31,8 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <link rel="canonical" href="https://josedavidosorio2005.github.io/Requerimientos-P-gina-Web-para-Artista/">
     
     <title>Boceto Juan Giraldo - Artista Tatuador Profesional</title>
     
@@ -44,8 +46,22 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://www.instagram.com">
     
-    <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/styles.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Juan Giraldo",
+            "alternateName": "Boceto Juan Giraldo",
+            "url": "https://josedavidosorio2005.github.io/Requerimientos-P-gina-Web-para-Artista/",
+            "sameAs": [
+                "https://www.instagram.com/boceto.juangiraldo?igsh=MTFpNGY1bnV6dnh0NA=="
+            ],
+            "jobTitle": "Artista tatuador"
+        }
+        </script>
 </head>
 <body>
     <!-- Navegación -->
@@ -102,9 +118,7 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-image">
-                    <div class="image-placeholder">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
+                    <img src="images/profile/profile.jpg" alt="Juan Giraldo - Artista tatuador" loading="lazy" decoding="async">
                 </div>
                 <div class="about-text">
                     <h2>Sobre Mí</h2>
@@ -144,130 +158,56 @@
                 <button class="filter-btn" data-filter="acuarela">Acuarela</button>
             </div>
 
-            <!-- Widget de Instagram incrustado - Diseño Profesional -->
-            <div class="instagram-embed-wrapper">
+            <!-- Instagram (Recomendado): Widget único o API (más rápido que 6 embeds) -->
+            <div class="instagram-embed-wrapper" id="instagram-widget-container">
                 <div class="instagram-embed-info">
                     <p><i class="fab fa-instagram"></i> Mis Últimos Trabajos en Instagram</p>
                 </div>
-                
-                <!-- Grid de imágenes de Instagram - Simétrico 3x2 -->
-                <div class="instagram-posts-grid">
-                    <!-- Publicación 1 -->
-                    <div class="instagram-post-embed">
-                        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/INSTAGRAM_POST_ID_1/" data-instgrm-version="14"></blockquote>
-                    </div>
-                    
-                    <!-- Publicación 2 -->
-                    <div class="instagram-post-embed">
-                        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/INSTAGRAM_POST_ID_2/" data-instgrm-version="14"></blockquote>
-                    </div>
-                    
-                    <!-- Publicación 3 -->
-                    <div class="instagram-post-embed">
-                        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/INSTAGRAM_POST_ID_3/" data-instgrm-version="14"></blockquote>
-                    </div>
-                    
-                    <!-- Publicación 4 -->
-                    <div class="instagram-post-embed">
-                        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/INSTAGRAM_POST_ID_4/" data-instgrm-version="14"></blockquote>
-                    </div>
-                    
-                    <!-- Publicación 5 -->
-                    <div class="instagram-post-embed">
-                        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/INSTAGRAM_POST_ID_5/" data-instgrm-version="14"></blockquote>
-                    </div>
-                    
-                    <!-- Publicación 6 -->
-                    <div class="instagram-post-embed">
-                        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/INSTAGRAM_POST_ID_6/" data-instgrm-version="14"></blockquote>
-                    </div>
-                </div>
-                
-                <!-- Script de Instagram para cargar publicaciones -->
-                <script async src="//www.instagram.com/embed.js"></script>
-                
-                <!-- Botón directo a Instagram con instrucciones -->
+
                 <div class="instagram-direct-link">
                     <a href="https://www.instagram.com/boceto.juangiraldo?igsh=MTFpNGY1bnV6dnh0NA==" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                        <i class="fab fa-instagram"></i> Ver Todas mis Publicaciones en Instagram
+                        <i class="fab fa-instagram"></i> Ver Instagram
                     </a>
-                    <p>💡 <strong>Para mostrar tus imágenes:</strong> Ve a cada foto en Instagram → Clic en "..." → "Insertar" → Copia el código → Reemplaza INSTAGRAM_POST_ID_X arriba con el código real de cada publicación</p>
+                    <p>💡 <strong>Para mostrar publicaciones aquí:</strong> pega el código de un widget (Elfsight/SnapWidget/LightWidget) dentro de este contenedor, o activa la API en <strong>js/config.js</strong> (useAPI: true + accessToken).</p>
                 </div>
             </div>
+
+            <!-- Contenedores para API (script.js los usa si activas useAPI) -->
+            <div id="instagram-loading" style="display:none;" aria-live="polite"></div>
+            <div id="instagram-feed" style="display:none;"></div>
             
             <div class="gallery-grid" id="galleryGrid" role="list">
-                <!-- Placeholder items con lazy loading -->
                 <article class="gallery-item" data-category="realismo" role="listitem">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-image" aria-hidden="true"></i>
-                        <p>Realismo</p>
-                    </div>
-                    <div class="gallery-overlay">
-                        <p>Estilo Realismo</p>
-                    </div>
+                    <img src="images/gallery/dibujo1.jpg" alt="Tatuaje estilo Realismo - trabajo 1" loading="lazy" decoding="async">
+                    <div class="gallery-overlay"><p>Realismo</p></div>
                 </article>
                 <article class="gallery-item" data-category="tradicional" role="listitem">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-image" aria-hidden="true"></i>
-                        <p>Tradicional</p>
-                    </div>
-                    <div class="gallery-overlay">
-                        <p>Estilo Tradicional</p>
-                    </div>
+                    <img src="images/gallery/dibujo2.jpg" alt="Tatuaje estilo Tradicional - trabajo 2" loading="lazy" decoding="async">
+                    <div class="gallery-overlay"><p>Tradicional</p></div>
                 </article>
                 <article class="gallery-item" data-category="geometrico" role="listitem">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-image" aria-hidden="true"></i>
-                        <p>Geométrico</p>
-                    </div>
-                    <div class="gallery-overlay">
-                        <p>Estilo Geométrico</p>
-                    </div>
+                    <img src="images/gallery/dibujo3.jpg" alt="Tatuaje estilo Geométrico - trabajo 3" loading="lazy" decoding="async">
+                    <div class="gallery-overlay"><p>Geométrico</p></div>
                 </article>
                 <article class="gallery-item" data-category="acuarela" role="listitem">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-image" aria-hidden="true"></i>
-                        <p>Acuarela</p>
-                    </div>
-                    <div class="gallery-overlay">
-                        <p>Estilo Acuarela</p>
-                    </div>
+                    <img src="images/gallery/dibujo4.jpg" alt="Tatuaje estilo Acuarela - trabajo 4" loading="lazy" decoding="async">
+                    <div class="gallery-overlay"><p>Acuarela</p></div>
                 </article>
                 <article class="gallery-item" data-category="realismo" role="listitem">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-image" aria-hidden="true"></i>
-                        <p>Realismo</p>
-                    </div>
-                    <div class="gallery-overlay">
-                        <p>Estilo Realismo</p>
-                    </div>
+                    <img src="images/gallery/dibujo5.jpg" alt="Tatuaje estilo Realismo - trabajo 5" loading="lazy" decoding="async">
+                    <div class="gallery-overlay"><p>Realismo</p></div>
                 </article>
                 <article class="gallery-item" data-category="tradicional" role="listitem">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-image" aria-hidden="true"></i>
-                        <p>Tradicional</p>
-                    </div>
-                    <div class="gallery-overlay">
-                        <p>Estilo Tradicional</p>
-                    </div>
+                    <img src="images/gallery/dibujo6.jpg" alt="Tatuaje estilo Tradicional - trabajo 6" loading="lazy" decoding="async">
+                    <div class="gallery-overlay"><p>Tradicional</p></div>
                 </article>
                 <article class="gallery-item" data-category="geometrico" role="listitem">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-image" aria-hidden="true"></i>
-                        <p>Geométrico</p>
-                    </div>
-                    <div class="gallery-overlay">
-                        <p>Estilo Geométrico</p>
-                    </div>
+                    <img src="images/gallery/dibujo7.jpg" alt="Tatuaje estilo Geométrico - trabajo 7" loading="lazy" decoding="async">
+                    <div class="gallery-overlay"><p>Geométrico</p></div>
                 </article>
                 <article class="gallery-item" data-category="acuarela" role="listitem">
-                    <div class="gallery-placeholder">
-                        <i class="fas fa-image" aria-hidden="true"></i>
-                        <p>Acuarela</p>
-                    </div>
-                    <div class="gallery-overlay">
-                        <p>Estilo Acuarela</p>
-                    </div>
+                    <img src="images/gallery/dibujo8.jpg" alt="Tatuaje estilo Acuarela - trabajo 8" loading="lazy" decoding="async">
+                    <div class="gallery-overlay"><p>Acuarela</p></div>
                 </article>
             </div>
         </div>
@@ -424,6 +364,7 @@
     -->
 
     <!-- Scripts -->
+    <script src="js/config.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
