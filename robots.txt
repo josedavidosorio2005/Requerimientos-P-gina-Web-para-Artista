@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://josedavidosorio2005.github.io/Requerimientos-P-gina-Web-para-Artista/sitemap.xml
+
+# Optimización para búsqueda
+Disallow: /js/config.js
+Disallow: /*.md$
