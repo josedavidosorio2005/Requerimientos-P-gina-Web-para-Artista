@@ -493,6 +493,17 @@
             <div class="carrito-actions">
                 <button type="button" class="btn btn-primary" id="finalizarCompra">Finalizar compra</button>
             </div>
+
+            <div class="paypal-section" id="paypalSection" hidden>
+                <p class="paypal-kicker">Paga seguro con PayPal</p>
+                <div id="paypalButtons" aria-label="Botones de pago PayPal"></div>
+                <p class="paypal-hint">Tu pago se procesa en PayPal. Recibirás confirmación al aprobarlo.</p>
+            </div>
+
+            <div class="paypal-missing" id="paypalMissing" hidden>
+                <p><strong>PayPal no está configurado todavía.</strong></p>
+                <p>Actívalo en <code>js/config.js</code> (paypal.enabled + paypal.clientId).</p>
+            </div>
             <p class="carrito-nota">Al finalizar, te contactaremos para confirmar detalles.</p>
         </div>
     </div>

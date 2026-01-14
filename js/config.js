@@ -181,8 +181,21 @@ const SITE_CONFIG = {
     // Configuración de carrito
     cart: {
         maxItems: 20,
+        // Símbolo para mostrar (UI)
         currency: '€',
+        // Código ISO para pagos (PayPal/Stripe/etc): EUR, USD, COP...
+        currencyCode: 'EUR',
         showPrices: true
+    },
+
+    // Pagos con PayPal
+    // IMPORTANTE: solo necesitas el Client ID (NO hay "secret" en el frontend).
+    // Para obtenerlo: https://developer.paypal.com/dashboard/apps
+    paypal: {
+        enabled: false,
+        clientId: '',
+        // Por defecto usa cart.currencyCode si existe
+        currencyCode: 'EUR'
     },
 
     // Google Analytics (opcional)

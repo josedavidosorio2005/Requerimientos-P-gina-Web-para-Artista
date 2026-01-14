@@ -388,6 +388,26 @@ function getCurrencySymbol() {
     return '€';
 }
 
+function getCurrencyCode() {
+    if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.cart && SITE_CONFIG.cart.currencyCode) {
+        return SITE_CONFIG.cart.currencyCode;
+    }
+
+    const symbol = getCurrencySymbol();
+    if (symbol === '€') return 'EUR';
+    if (symbol === '$') return 'USD';
+    if (symbol.toUpperCase && symbol.toUpperCase() === 'COP') return 'COP';
+    return 'EUR';
+}
+
+function formatAmount(value, currencyCode) {
+    const zeroDecimal = new Set(['COP', 'JPY', 'KRW', 'CLP', 'VND']);
+    const decimals = zeroDecimal.has(currencyCode) ? 0 : 2;
+    const factor = Math.pow(10, decimals);
+    const rounded = Math.round((Number(value) || 0) * factor) / factor;
+    return rounded.toFixed(decimals);
+}
+
 function parsePriceToNumber(value) {
     if (value == null) return 0;
     const raw = String(value).trim();
@@ -520,6 +540,7 @@ class ShoppingCart {
     render() {
         const container = document.getElementById('carritoItems');
         const totalElement = document.getElementById('totalCarrito');
+        const subtotalElement = document.getElementById('subtotalCarrito');
 
         const currency = getCurrencySymbol();
 
@@ -533,6 +554,7 @@ class ShoppingCart {
                 </div>
             `;
             totalElement.textContent = `${currency}0.00`;
+            if (subtotalElement) subtotalElement.textContent = `${currency}0.00`;
             return;
         }
 
@@ -551,11 +573,13 @@ class ShoppingCart {
             </div>
         `).join('');
 
-        totalElement.textContent = `${currency}${this.getTotal().toFixed(2)}`;
+        const total = this.getTotal();
+        totalElement.textContent = `${currency}${total.toFixed(2)}`;
+        if (subtotalElement) subtotalElement.textContent = `${currency}${total.toFixed(2)}`;
     }
 }
 
-    let cart = new ShoppingCart();
+let cart = new ShoppingCart();
 
 // Sistema de validación de formularios
 class FormValidator {
@@ -989,6 +1013,156 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // === PAYPAL (cargar SDK + renderizar botones) ===
+    const paypalSection = document.getElementById('paypalSection');
+    const paypalMissing = document.getElementById('paypalMissing');
+    const paypalButtonsContainer = document.getElementById('paypalButtons');
+
+    function getPayPalConfig() {
+        if (typeof SITE_CONFIG === 'undefined') return null;
+        const paypalCfg = SITE_CONFIG.paypal;
+        if (!paypalCfg || !paypalCfg.enabled) return null;
+        if (!paypalCfg.clientId || String(paypalCfg.clientId).trim() === '') return null;
+
+        const currencyCode = paypalCfg.currencyCode || getCurrencyCode();
+        return {
+            clientId: String(paypalCfg.clientId).trim(),
+            currencyCode
+        };
+    }
+
+    function loadPayPalSdk(clientId, currencyCode) {
+        return new Promise((resolve, reject) => {
+            if (window.paypal && typeof window.paypal.Buttons === 'function') {
+                resolve();
+                return;
+            }
+
+            const existing = document.querySelector('script[data-paypal-sdk="true"]');
+            if (existing) {
+                existing.addEventListener('load', () => resolve());
+                existing.addEventListener('error', () => reject(new Error('No se pudo cargar PayPal SDK')));
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=${encodeURIComponent(currencyCode)}&intent=capture`;
+            script.async = true;
+            script.defer = true;
+            script.dataset.paypalSdk = 'true';
+            script.setAttribute('data-paypal-sdk', 'true');
+
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error('No se pudo cargar PayPal SDK'));
+            document.head.appendChild(script);
+        });
+    }
+
+    function buildPayPalItems() {
+        // Normalizar items (CartMejorado usa cantidad; ShoppingCart no)
+        const items = (cart && Array.isArray(cart.items)) ? cart.items : [];
+        const currencyCode = getCurrencyCode();
+
+        const normalized = items
+            .map((it) => {
+                const name = (it && it.nombre) ? String(it.nombre) : 'Producto';
+                const qty = Number(it && it.cantidad != null ? it.cantidad : 1);
+                const quantity = Math.max(1, Math.floor(qty));
+                const unit = parsePriceToNumber(it && it.precio);
+                return {
+                    name,
+                    quantity,
+                    unitAmount: Math.max(0, unit),
+                    currencyCode
+                };
+            })
+            .filter((it) => it.unitAmount >= 0 && it.quantity >= 1);
+
+        const itemTotal = normalized.reduce((sum, it) => sum + (it.unitAmount * it.quantity), 0);
+        return { normalized, itemTotal, currencyCode };
+    }
+
+    async function renderPayPalButtons() {
+        const cfg = getPayPalConfig();
+        if (!paypalSection || !paypalButtonsContainer) return;
+
+        // Reset visibilidad
+        paypalSection.hidden = true;
+        if (paypalMissing) paypalMissing.hidden = true;
+
+        if (!cfg) {
+            // Si PayPal no está configurado, mostramos un aviso solo si el usuario abrió el carrito
+            if (paypalMissing) paypalMissing.hidden = false;
+            return;
+        }
+
+        const { normalized, itemTotal, currencyCode } = buildPayPalItems();
+        if (!normalized.length || itemTotal <= 0) {
+            return;
+        }
+
+        try {
+            await loadPayPalSdk(cfg.clientId, cfg.currencyCode || currencyCode);
+        } catch (err) {
+            console.error(err);
+            if (paypalMissing) paypalMissing.hidden = false;
+            return;
+        }
+
+        // Render
+        paypalButtonsContainer.innerHTML = '';
+        paypalSection.hidden = false;
+
+        const amountValue = formatAmount(itemTotal, currencyCode);
+
+        window.paypal
+            .Buttons({
+                style: {
+                    layout: 'vertical',
+                    shape: 'rect',
+                    label: 'paypal'
+                },
+                createOrder: (data, actions) => {
+                    return actions.order.create({
+                        purchase_units: [
+                            {
+                                amount: {
+                                    currency_code: currencyCode,
+                                    value: amountValue
+                                },
+                                description: 'Compra - Boceto Juan Giraldo'
+                            }
+                        ],
+                        application_context: {
+                            shipping_preference: 'NO_SHIPPING'
+                        }
+                    });
+                },
+                onApprove: async (data, actions) => {
+                    const details = await actions.order.capture();
+                    console.log('✅ Pago aprobado:', details);
+                    notificationSystem.show('Pago aprobado. ¡Gracias por tu compra!', 'success');
+
+                    // Vaciar carrito y cerrar modal
+                    try {
+                        if (cart && typeof cart.clear === 'function') cart.clear();
+                    } catch (e) {}
+
+                    const carritoEl = document.getElementById('carritoModal');
+                    if (carritoEl) {
+                        carritoEl.classList.remove('active');
+                        carritoEl.setAttribute('aria-hidden', 'true');
+                        document.body.style.overflow = '';
+                    }
+                },
+                onError: (err) => {
+                    console.error('❌ PayPal error:', err);
+                    notificationSystem.show('No se pudo procesar el pago con PayPal.', 'error');
+                }
+            })
+            .render('#paypalButtons');
+    }
+
     // Botón carrito
     const carritoIcon = document.querySelector('.carrito-icon');
     if (carritoIcon) {
@@ -996,6 +1170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             cart.render();
             carritoModal.open();
+            renderPayPalButtons();
         });
     }
 
@@ -1022,18 +1197,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const mensaje = `¡Gracias por tu interés! Productos seleccionados: ${cart.items.length}. Te contactaremos pronto para finalizar tu compra.`;
-            notificationSystem.show(mensaje, 'success');
-            
-            // Aquí podrías enviar a WhatsApp:
-            // const phone = '34123456789';
-            // const text = `Hola, me interesan estos productos: ${cart.items.map(i => i.nombre).join(', ')}`;
-            // window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
+            const whatsappPhone =
+                (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.social && SITE_CONFIG.social.whatsapp) ? SITE_CONFIG.social.whatsapp :
+                (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.whatsapp && SITE_CONFIG.whatsapp.businessPhone) ? SITE_CONFIG.whatsapp.businessPhone :
+                '';
+
+            const { normalized, itemTotal, currencyCode } = buildPayPalItems();
+            const currencySymbol = getCurrencySymbol();
+            const totalText = `${currencySymbol}${formatAmount(itemTotal, currencyCode)}`;
+
+            const productosTxt = normalized.map(it => `• ${it.name} x${it.quantity}`).join('\n');
+            const text = `Hola! Quiero comprar:\n${productosTxt}\n\nTotal: ${totalText}`;
+
+            if (!whatsappPhone) {
+                notificationSystem.show('Configura tu WhatsApp en js/config.js para finalizar por mensaje.', 'info');
+                return;
+            }
+
+            window.open(`https://wa.me/${encodeURIComponent(whatsappPhone)}?text=${encodeURIComponent(text)}`, '_blank');
+            notificationSystem.show('Abriendo WhatsApp para finalizar la compra…', 'success');
             
             setTimeout(() => {
                 cart.clear();
                 carritoModal.close();
             }, 2000);
+        });
+    }
+
+    // Intento de renderizar PayPal si el carrito se abre por fallback inline (onclick)
+    const openCarritoBtn = document.getElementById('openCarrito');
+    if (openCarritoBtn) {
+        openCarritoBtn.addEventListener('click', () => {
+            // en caso de que este listener corra además del inline
+            setTimeout(renderPayPalButtons, 0);
         });
     }
 
@@ -1176,6 +1372,9 @@ window.BJ = {
     SecurityUtils,
     CONFIG
 };
+
+// Soporte para handlers inline antiguos (index.html usa window.cart en fallbacks)
+window.cart = cart;
 
 // === SISTEMA COMPLETO DE VENTAS ===
 
@@ -1481,6 +1680,9 @@ if (typeof cart !== 'undefined') {
 if (window.BJ) {
     window.BJ.cart = cart;
 }
+
+// Mantener alias global consistente
+window.cart = cart;
 
 // Inicializar checkout
 const checkoutController = new CheckoutController();
