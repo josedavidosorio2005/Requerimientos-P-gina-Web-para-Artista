@@ -7,6 +7,9 @@
 tatuador/
 │
 ├── 📄 index.html              # Página principal del sitio
+├── 📄 manifest.json          # PWA manifest (raíz)
+├── 📄 robots.txt             # SEO: robots (raíz)
+├── 📄 sitemap.xml            # SEO: sitemap (raíz)
 ├── 📄 .gitignore             # Archivos ignorados por Git
 ├── 📄 .htaccess              # Configuración del servidor
 │
@@ -22,11 +25,7 @@ tatuador/
 │   ├── gallery/              # Imágenes de la galería
 │   └── profile/              # Imágenes de perfil
 │
-├── 📁 assets/                # Recursos adicionales
-│   ├── manifest.json         # Web App Manifest
-│   ├── sitemap.xml          # Mapa del sitio para SEO
-│   └── robots.txt           # Instrucciones para buscadores
-│
+
 ├── 📁 docs/                  # Documentación del proyecto
 │   ├── README.md            # Información general
 │   ├── INSTRUCCIONES_INSTAGRAM.md
