@@ -96,12 +96,12 @@
                 <li><a href="#servicios" class="nav-link">Servicios</a></li>
                 <li><a href="#contacto" class="nav-link">Contacto</a></li>
                 <li>
-                    <button type="button" id="openTienda" class="btn-tienda" aria-label="Abrir tienda">
+                    <button type="button" id="openTienda" class="btn-tienda" aria-label="Abrir tienda" onclick="(function(){var o=document.getElementById('tiendaOverlay');if(o){o.classList.add('active');o.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}})()">
                         <i class="fas fa-store" aria-hidden="true"></i> Tienda
                     </button>
                 </li>
                 <li>
-                    <button type="button" class="carrito-icon" aria-label="Abrir carrito">
+                    <button type="button" id="openCarrito" class="carrito-icon" aria-label="Abrir carrito" onclick="(function(){try{if(window.cart&&typeof window.cart.render==='function'){window.cart.render();}}catch(e){};var m=document.getElementById('carritoModal');if(m){m.classList.add('active');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}})()">
                         <i class="fas fa-shopping-cart" aria-hidden="true"></i> Carrito
                         <span id="carritoCount" aria-label="0 productos en el carrito">0</span>
                     </button>
@@ -375,7 +375,7 @@
         <div class="tienda-panel" role="dialog" aria-modal="true" aria-label="Tienda">
             <div class="tienda-header">
                 <h2>Compra / Reservas</h2>
-                <button type="button" id="closeTienda" class="tienda-close" aria-label="Cerrar tienda">&times;</button>
+                <button type="button" id="closeTienda" class="tienda-close" aria-label="Cerrar tienda" onclick="(function(){var o=document.getElementById('tiendaOverlay');if(o){o.classList.remove('active');o.setAttribute('aria-hidden','true');document.body.style.overflow='';}})()">&times;</button>
             </div>
 
             <p class="tienda-subtitle">Selecciona un servicio o producto y agrégalo al carrito.</p>
@@ -446,7 +446,7 @@
     <!-- Modal: Carrito -->
     <div class="modal" id="carritoModal" aria-hidden="true" role="dialog" aria-label="Carrito de compras">
         <div class="carrito-modal-box">
-            <button class="modal-close" aria-label="Cerrar carrito">&times;</button>
+            <button class="modal-close" aria-label="Cerrar carrito" onclick="(function(){var m=document.getElementById('carritoModal');if(m){m.classList.remove('active');m.setAttribute('aria-hidden','true');document.body.style.overflow='';}})()">&times;</button>
             <h3>Tu carrito</h3>
             <div id="carritoItems"></div>
             <div class="carrito-resumen">
