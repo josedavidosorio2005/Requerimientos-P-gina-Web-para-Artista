@@ -374,11 +374,26 @@
     <div id="tiendaOverlay" class="tienda-overlay" aria-hidden="true">
         <div class="tienda-panel" role="dialog" aria-modal="true" aria-label="Tienda">
             <div class="tienda-header">
-                <h2>Compra / Reservas</h2>
-                <button type="button" id="closeTienda" class="tienda-close" aria-label="Cerrar tienda" onclick="(function(){var o=document.getElementById('tiendaOverlay');if(o){o.classList.remove('active');o.setAttribute('aria-hidden','true');document.body.style.overflow='';}})()">&times;</button>
+                <div class="tienda-header-left">
+                    <h2>Compra / Reservas</h2>
+                    <p class="tienda-kicker">Elige un servicio, agrégalo al carrito y finaliza por WhatsApp.</p>
+                </div>
+                <div class="tienda-header-actions">
+                    <button type="button" class="btn btn-outline tienda-ver-carrito" aria-label="Ver carrito" onclick="(function(){try{if(window.cart&&typeof window.cart.render==='function'){window.cart.render();}}catch(e){};var o=document.getElementById('tiendaOverlay');if(o){o.classList.remove('active');o.setAttribute('aria-hidden','true');} var m=document.getElementById('carritoModal');if(m){m.classList.add('active');m.setAttribute('aria-hidden','false');} document.body.style.overflow='hidden';})()">
+                        <i class="fas fa-shopping-cart" aria-hidden="true"></i> Ver carrito
+                    </button>
+                    <button type="button" id="closeTienda" class="tienda-close" aria-label="Cerrar tienda" onclick="(function(){var o=document.getElementById('tiendaOverlay');if(o){o.classList.remove('active');o.setAttribute('aria-hidden','true');document.body.style.overflow='';}})()">&times;</button>
+                </div>
             </div>
 
-            <p class="tienda-subtitle">Selecciona un servicio o producto y agrégalo al carrito.</p>
+            <div class="tienda-hero">
+                <div class="tienda-hero-badges" aria-label="Beneficios">
+                    <span class="tienda-badge"><i class="fas fa-shield-heart" aria-hidden="true"></i> Higiene 100%</span>
+                    <span class="tienda-badge"><i class="fas fa-star" aria-hidden="true"></i> +500 clientes</span>
+                    <span class="tienda-badge"><i class="fas fa-comments" aria-hidden="true"></i> Confirmación por WhatsApp</span>
+                </div>
+                <p class="tienda-subtitle">Compra bonos, agenda consulta o pide tu diseño personalizado. Todo se confirma por mensaje para ajustar detalles.</p>
+            </div>
 
             <div class="tienda-categorias" role="tablist" aria-label="Categorías">
                 <button type="button" class="categoria-btn active" data-categoria="todos" aria-pressed="true">Todos</button>
@@ -393,6 +408,10 @@
                         <img src="images/gallery/dibujo1.jpg" alt="Diseño personalizado" loading="lazy" decoding="async">
                     </div>
                     <div class="product-info">
+                        <div class="producto-topline">
+                            <span class="producto-tag">Servicio</span>
+                            <span class="producto-badge">Recomendado</span>
+                        </div>
                         <h3>Diseño Personalizado</h3>
                         <p class="producto-desc">Diseño único creado para tu idea y ubicación.</p>
                         <div class="product-price producto-precio">€80</div>
@@ -405,6 +424,10 @@
                         <img src="images/gallery/dibujo2.jpg" alt="Consulta de diseño" loading="lazy" decoding="async">
                     </div>
                     <div class="product-info">
+                        <div class="producto-topline">
+                            <span class="producto-tag">Servicio</span>
+                            <span class="producto-badge alt">Nuevo</span>
+                        </div>
                         <h3>Consulta de Diseño</h3>
                         <p class="producto-desc">1 hora para definir estilo, tamaño y presupuesto.</p>
                         <div class="product-price producto-precio">€40</div>
@@ -417,6 +440,10 @@
                         <img src="images/gallery/dibujo3.jpg" alt="Bono regalo" loading="lazy" decoding="async">
                     </div>
                     <div class="product-info">
+                        <div class="producto-topline">
+                            <span class="producto-tag">Bono</span>
+                            <span class="producto-badge">Más vendido</span>
+                        </div>
                         <h3>Bono Regalo (1 Sesión)</h3>
                         <p class="producto-desc">Ideal para regalar. Válido por 6 meses.</p>
                         <div class="product-price producto-precio">€150</div>
@@ -429,6 +456,10 @@
                         <img src="images/gallery/dibujo4.jpg" alt="Kit post-tatuaje" loading="lazy" decoding="async">
                     </div>
                     <div class="product-info">
+                        <div class="producto-topline">
+                            <span class="producto-tag">Producto</span>
+                            <span class="producto-badge alt">Essential</span>
+                        </div>
                         <h3>Kit Cuidado Post‑Tatuaje</h3>
                         <p class="producto-desc">Recomendado para curación y mejor resultado.</p>
                         <div class="product-price producto-precio">€35</div>
