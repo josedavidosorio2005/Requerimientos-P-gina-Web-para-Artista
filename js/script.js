@@ -378,7 +378,7 @@ class NotificationSystem {
     }
 }
 
-const notificationSystem = new NotificationSystem();
+let notificationSystem = new NotificationSystem();
 
 // Helpers: moneda y parseo de precios (soporta €, $, COP, separadores . y ,)
 function getCurrencySymbol() {
@@ -1560,7 +1560,7 @@ window.addEventListener('scroll', () => {
 });
 
 // Animaciones al scroll (elementos aparecen al entrar en viewport)
-const observerOptions = {
+const fadeInObserverOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -100px 0px'
 };
@@ -1572,7 +1572,7 @@ const fadeInObserver = new IntersectionObserver((entries) => {
             entry.target.style.transform = 'translateY(0)';
         }
     });
-}, observerOptions);
+}, fadeInObserverOptions);
 
 // Aplicar animación a secciones
 document.querySelectorAll('.gallery, .stats-grid, .producto-card-modern').forEach(el => {
@@ -1665,6 +1665,9 @@ class NotificationSystemMejorado {
 // Reemplazar sistema de notificaciones
 if (typeof notificationSystem !== 'undefined') {
     notificationSystem = new NotificationSystemMejorado();
+    if (window.BJ) {
+        window.BJ.notificationSystem = notificationSystem;
+    }
 }
 
 // Añadir indicador de carga
