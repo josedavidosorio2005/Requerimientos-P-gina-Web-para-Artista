@@ -12,7 +12,7 @@ tatuador/
 │
 ├── 📁 css/                   # Estilos CSS
 │   ├── styles.css            # CSS principal (organizado)
-│   └── styles-organized.css  # Versión de respaldo organizada
+│
 │
 ├── 📁 js/                    # JavaScript
 │   ├── script.js             # Funcionalidad principal
@@ -44,11 +44,7 @@ tatuador/
 │   ├── CONFIGURAR_INSTAGRAM_AUTOMATICO.html
 │   └── instagram-widget-options.html
 │
-└── 📁 backup/                # Archivos de respaldo
-    ├── styles-backup.css     # Backup del CSS anterior
-    ├── styles-original.css   # CSS original
-    ├── subir-a-github.ps1   # Script PowerShell
-    └── subir-a-github.sh    # Script Bash
+
 
 ```
 
@@ -78,9 +74,7 @@ tatuador/
 - Documentación técnica
 - Análisis y mejoras
 
-### `/backup` - Respaldos
-- Versiones anteriores de archivos
-- Scripts de utilidad
+
 
 ## 🚀 Cómo Usar
 
