@@ -422,6 +422,14 @@ function getBusinessWhatsAppPhone() {
     return fromSocial || fromWhatsappCfg;
 }
 
+function getPickupAddressText() {
+    if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.contact && SITE_CONFIG.contact.address) {
+        const addr = String(SITE_CONFIG.contact.address).trim();
+        return addr ? `(${addr})` : '';
+    }
+    return '';
+}
+
 function getNormalizedCart(cartInstance) {
     const currencySymbol = getCurrencySymbol();
     const currencyCode = getCurrencyCode();
@@ -1406,6 +1414,34 @@ class CheckoutController {
         if (checkoutForm) {
             checkoutForm.addEventListener('submit', (e) => this.procesarPedido(e));
         }
+
+        // Mostrar dirección del estudio si existe
+        const pickupAddress = document.getElementById('pickupAddress');
+        if (pickupAddress) {
+            pickupAddress.textContent = getPickupAddressText();
+        }
+
+        // Toggle: envío vs recoger
+        const entregaRadios = document.querySelectorAll('input[name="entrega"]');
+        const direccionWrap = document.getElementById('checkoutDireccionWrap');
+        const direccionInput = document.getElementById('checkoutDireccion');
+
+        const applyEntregaUi = () => {
+            const selected = document.querySelector('input[name="entrega"]:checked');
+            const entrega = selected ? selected.value : 'envio';
+            const isEnvio = entrega === 'envio';
+
+            if (direccionWrap) {
+                direccionWrap.style.display = isEnvio ? '' : 'none';
+            }
+            if (direccionInput) {
+                direccionInput.required = isEnvio;
+                if (!isEnvio) direccionInput.value = '';
+            }
+        };
+
+        entregaRadios.forEach(r => r.addEventListener('change', applyEntregaUi));
+        applyEntregaUi();
         
         // Cerrar confirmación
         const cerrarConfirmacion = document.getElementById('cerrarConfirmacion');
@@ -1490,6 +1526,7 @@ class CheckoutController {
             telefono: formData.get('telefono'),
             ciudad: formData.get('ciudad'),
             direccion: formData.get('direccion'),
+            entrega: formData.get('entrega') || 'envio',
             notas: formData.get('notas'),
             metodo: formData.get('metodo')
         };
@@ -1497,6 +1534,11 @@ class CheckoutController {
         // Validar campos
         if (!datos.nombre || !datos.telefono || !datos.ciudad) {
             notificationSystem.show('Por favor completa nombre, teléfono y ciudad', 'error');
+            return;
+        }
+
+        if (datos.entrega === 'envio' && !String(datos.direccion || '').trim()) {
+            notificationSystem.show('Para envío a domicilio, ingresa la dirección', 'error');
             return;
         }
 
@@ -1527,6 +1569,8 @@ class CheckoutController {
 ${productos}
 
 💰 *Total:* ${total}
+
+🚚 *Entrega:* ${datos.entrega === 'recoger' ? 'Recoger en estudio' : 'Envío a domicilio'}
 
 👤 *Cliente:*
 Nombre: ${datos.nombre}

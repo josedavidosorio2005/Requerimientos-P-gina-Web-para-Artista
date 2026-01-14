@@ -301,6 +301,44 @@
     flex-wrap: wrap;
 }
 
+.checkout-fieldset {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    padding: 12px 12px;
+    margin: 0 0 12px;
+}
+
+.checkout-fieldset legend {
+    padding: 0 8px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 700;
+}
+
+.checkout-delivery {
+    display: grid;
+    gap: 10px;
+}
+
+.checkout-radio {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.checkout-radio input {
+    margin-top: 4px;
+}
+
+#pickupAddress {
+    display: inline-block;
+    margin-left: 6px;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 500;
+}
+
 .confirm-code {
     margin: 0 0 10px;
     font-size: 1.4rem;

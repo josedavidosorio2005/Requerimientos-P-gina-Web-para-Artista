@@ -530,6 +530,20 @@
             </div>
 
             <form id="checkoutFormulario" class="checkout-form">
+                <fieldset class="checkout-full checkout-fieldset" aria-label="Método de entrega">
+                    <legend>¿A dónde lo enviamos?</legend>
+                    <div class="checkout-delivery">
+                        <label class="checkout-radio">
+                            <input type="radio" name="entrega" value="envio" checked>
+                            <span><strong>Envío a domicilio</strong> (necesita dirección)</span>
+                        </label>
+                        <label class="checkout-radio">
+                            <input type="radio" name="entrega" value="recoger">
+                            <span><strong>Recoger en estudio</strong> <small id="pickupAddress"></small></span>
+                        </label>
+                    </div>
+                </fieldset>
+
                 <div class="checkout-grid">
                     <label>
                         <span>Nombre completo *</span>
@@ -547,9 +561,9 @@
                         <span>Ciudad *</span>
                         <input type="text" name="ciudad" autocomplete="address-level2" required>
                     </label>
-                    <label class="checkout-full">
-                        <span>Dirección (si necesitas envío)</span>
-                        <input type="text" name="direccion" autocomplete="street-address" placeholder="Barrio, calle, número, referencias">
+                    <label class="checkout-full" id="checkoutDireccionWrap">
+                        <span>Dirección *</span>
+                        <input type="text" name="direccion" id="checkoutDireccion" autocomplete="street-address" placeholder="Barrio, calle, número, referencias" required>
                     </label>
                     <label class="checkout-full">
                         <span>Notas (opcional)</span>
