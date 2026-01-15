@@ -2,6 +2,388 @@
    Este archivo existe para no tocar el CSS minificado.
 */
 
+/* ==================================
+   TEMA GLOBAL (Beige / Escala de grises)
+   - styles.min.css define muchas variables en :root.
+   - Este archivo se carga DESPUÉS, así que aquí las sobrescribimos.
+   - Para activar grises: en index.html usa <html data-theme="gris">.
+   ================================== */
+
+:root,
+html[data-theme="beige"] {
+    /* Base */
+    --dark-color: #f6f0e6;     /* fondo principal */
+    --light-color: #1f1b16;    /* texto principal */
+    --gray-color: #6f655d;
+    --border-color: #d9cfbf;
+
+    /* Marca (reutiliza las variables “neón” del CSS original) */
+    --primary-color: #b08968;
+    --secondary-color: #7f6a55;
+    --accent-color: #e6d7c6;
+
+    --neon-pink: #b08968;
+    --neon-purple: #8b7967;
+    --neon-blue: #a1865d;
+    --neon-green: #9a8a74;
+
+    /* Gradientes (suaves, cálidos) */
+    --gradient-1: linear-gradient(135deg, #f6f0e6 0%, #efe3d3 50%, #e6d7c6 100%);
+    --gradient-2: linear-gradient(135deg, #efe3d3 0%, #e6d7c6 50%, #d8c4ae 100%);
+    --gradient-3: linear-gradient(135deg, #f6f0e6 0%, #e9dccb 60%, #d8c4ae 100%);
+    --gradient-4: linear-gradient(135deg, #f7f1e8 0%, #e6d7c6 60%, #d8c4ae 100%);
+    --gradient-5: linear-gradient(135deg, #f6f0e6 0%, #efe3d3 55%, #dcc9b4 100%);
+    --gradient-hero: linear-gradient(135deg, #f6f0e6 0%, #efe3d3 30%, #e6d7c6 60%, #dcc9b4 100%);
+
+    /* Sombras más sutiles */
+    --shadow: 0 15px 50px rgba(31, 27, 22, 0.14);
+    --shadow-colored: 0 15px 50px rgba(176, 137, 104, 0.22);
+    --shadow-neon: 0 0 18px rgba(176, 137, 104, 0.18), 0 0 34px rgba(139, 121, 103, 0.12);
+}
+
+html[data-theme="gris"] {
+    --dark-color: #f2f2f2;
+    --light-color: #1a1a1a;
+    --gray-color: #5f5f5f;
+    --border-color: #d0d0d0;
+
+    --primary-color: #4b4b4b;
+    --secondary-color: #2f2f2f;
+    --accent-color: #e6e6e6;
+
+    --neon-pink: #4b4b4b;
+    --neon-purple: #3e3e3e;
+    --neon-blue: #595959;
+    --neon-green: #666666;
+
+    --gradient-1: linear-gradient(135deg, #f2f2f2 0%, #e9e9e9 55%, #dfdfdf 100%);
+    --gradient-2: linear-gradient(135deg, #ededed 0%, #e3e3e3 55%, #d9d9d9 100%);
+    --gradient-3: linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 60%, #dcdcdc 100%);
+    --gradient-4: linear-gradient(135deg, #f2f2f2 0%, #e8e8e8 60%, #dddddd 100%);
+    --gradient-5: linear-gradient(135deg, #f2f2f2 0%, #e9e9e9 55%, #dddddd 100%);
+    --gradient-hero: linear-gradient(135deg, #f2f2f2 0%, #e9e9e9 35%, #dfdfdf 70%, #d6d6d6 100%);
+
+    --shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+    --shadow-colored: 0 15px 50px rgba(0, 0, 0, 0.16);
+    --shadow-neon: 0 0 18px rgba(0, 0, 0, 0.10), 0 0 34px rgba(0, 0, 0, 0.06);
+}
+
+/* Fondo y “ruido” suave (override de los pseudo-elementos del theme original) */
+body {
+    background: var(--dark-color);
+    color: var(--light-color);
+}
+
+body::before {
+    background:
+        radial-gradient(circle at 18% 35%, rgba(176, 137, 104, 0.16) 0%, transparent 55%),
+        radial-gradient(circle at 82% 70%, rgba(139, 121, 103, 0.12) 0%, transparent 55%),
+        radial-gradient(circle at 45% 15%, rgba(161, 134, 93, 0.10) 0%, transparent 60%);
+}
+
+html[data-theme="gris"] body::before {
+    background:
+        radial-gradient(circle at 18% 35%, rgba(0, 0, 0, 0.08) 0%, transparent 58%),
+        radial-gradient(circle at 82% 70%, rgba(0, 0, 0, 0.06) 0%, transparent 58%),
+        radial-gradient(circle at 45% 15%, rgba(0, 0, 0, 0.05) 0%, transparent 62%);
+}
+
+body::after {
+    background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(31, 27, 22, 0.028) 3px, rgba(31, 27, 22, 0.028) 5px),
+        repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(176, 137, 104, 0.030) 3px, rgba(176, 137, 104, 0.030) 5px);
+}
+
+html[data-theme="gris"] body::after {
+    background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0, 0, 0, 0.03) 3px, rgba(0, 0, 0, 0.03) 5px),
+        repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0, 0, 0, 0.02) 3px, rgba(0, 0, 0, 0.02) 5px);
+}
+
+/* Ajustes de legibilidad (muchos textos en styles.min.css están forzados a blanco) */
+.section-subtitle,
+.hero p,
+.about-text p,
+.info-item p,
+.service-card p,
+.instagram-direct-link p {
+    color: rgba(31, 27, 22, 0.82) !important;
+}
+
+html[data-theme="gris"] .section-subtitle,
+html[data-theme="gris"] .hero p,
+html[data-theme="gris"] .about-text p,
+html[data-theme="gris"] .info-item p,
+html[data-theme="gris"] .service-card p,
+html[data-theme="gris"] .instagram-direct-link p {
+    color: rgba(26, 26, 26, 0.78) !important;
+}
+
+/* Elementos que deben permanecer en blanco (por fondos fuertes) */
+.btn-instagram {
+    color: #fff !important;
+}
+
+/* Modales: conservar contraste (siguen siendo oscuros) */
+.carrito-modal-box .carrito-nota,
+.carrito-modal-box .paypal-hint,
+.checkout-modal-box .checkout-kicker,
+.confirm-modal-box .confirm-kicker {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.carrito-modal-box h3,
+.checkout-modal-box h3,
+.confirm-modal-box h3,
+.carrito-item p,
+.carrito-linea,
+.cantidad-num,
+.paypal-kicker {
+    color: rgba(255, 255, 255, 0.90) !important;
+}
+
+/* Navegación: fondo claro y enlaces oscuros */
+.navbar {
+    background: rgba(246, 240, 230, 0.92) !important;
+    border-bottom: 1px solid rgba(176, 137, 104, 0.35) !important;
+    box-shadow: 0 8px 30px rgba(31, 27, 22, 0.08);
+}
+
+.navbar.scrolled {
+    background: rgba(246, 240, 230, 0.96) !important;
+    border-bottom-color: rgba(176, 137, 104, 0.45) !important;
+}
+
+.nav-menu li a {
+    color: rgba(31, 27, 22, 0.88) !important;
+    text-shadow: none !important;
+}
+
+.nav-menu li a:hover {
+    color: var(--primary-color) !important;
+}
+
+html[data-theme="gris"] .navbar,
+html[data-theme="gris"] .navbar.scrolled {
+    background: rgba(242, 242, 242, 0.92) !important;
+    border-bottom-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Superficies: cards y paneles en tono claro */
+.gallery-filters,
+.service-card,
+.product-card,
+.info-item,
+.contact-form,
+.instagram-embed-wrapper,
+.instagram-post-embed {
+    background: rgba(255, 255, 255, 0.70) !important;
+    border-color: rgba(176, 137, 104, 0.22) !important;
+    box-shadow: 0 12px 40px rgba(31, 27, 22, 0.10) !important;
+    backdrop-filter: blur(10px);
+}
+
+html[data-theme="gris"] .gallery-filters,
+html[data-theme="gris"] .service-card,
+html[data-theme="gris"] .product-card,
+html[data-theme="gris"] .info-item,
+html[data-theme="gris"] .contact-form,
+html[data-theme="gris"] .instagram-embed-wrapper,
+html[data-theme="gris"] .instagram-post-embed {
+    background: rgba(255, 255, 255, 0.72) !important;
+    border-color: rgba(0, 0, 0, 0.14) !important;
+}
+
+/* Títulos que eran “neón”: mantener estilo, pero con tonos del tema */
+.section-title {
+    filter: none !important;
+}
+
+/* Títulos con mejor contraste (evita texto transparente sobre fondos claros) */
+.section-title,
+.hero h1 {
+    background: none !important;
+    -webkit-text-fill-color: var(--light-color) !important;
+    color: var(--light-color) !important;
+    text-shadow: none !important;
+}
+
+/* Hero: texto secundario un poco más marcado */
+.hero p {
+    color: rgba(31, 27, 22, 0.86) !important;
+}
+
+html[data-theme="gris"] .hero p {
+    color: rgba(26, 26, 26, 0.82) !important;
+}
+
+/* Botones principales: fondo más oscuro + texto blanco */
+.btn,
+.carrito-icon,
+.btn-tienda,
+.scroll-to-top {
+    color: #fff !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.btn,
+.carrito-icon,
+.btn-tienda,
+.scroll-to-top {
+    background: linear-gradient(135deg, #6f523a, #3c2f26) !important;
+    box-shadow: 0 12px 34px rgba(31, 27, 22, 0.22) !important;
+}
+
+html[data-theme="gris"] .btn,
+html[data-theme="gris"] .carrito-icon,
+html[data-theme="gris"] .btn-tienda,
+html[data-theme="gris"] .scroll-to-top {
+    background: linear-gradient(135deg, #3a3a3a, #141414) !important;
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.22) !important;
+}
+
+.btn:hover,
+.carrito-icon:hover,
+.btn-tienda:hover,
+.scroll-to-top:hover {
+    box-shadow: 0 18px 44px rgba(31, 27, 22, 0.28) !important;
+    transform: translateY(-3px) scale(1.02);
+}
+
+.btn-outline {
+    color: var(--light-color) !important;
+    border-color: rgba(111, 82, 58, 0.55) !important;
+}
+
+.btn-outline:hover {
+    color: #fff !important;
+}
+
+/* Badge del carrito: más contraste */
+#carritoCount {
+    background: #6f523a !important;
+    color: #fff !important;
+    box-shadow: 0 6px 18px rgba(31, 27, 22, 0.22) !important;
+}
+
+html[data-theme="gris"] #carritoCount {
+    background: #2a2a2a !important;
+}
+
+/* Sección About: quitar look “neón oscuro” que rompe contraste */
+.about-section {
+    background: var(--gradient-1) !important;
+}
+
+.about-section::before {
+    background: transparent !important;
+}
+
+.about-image img {
+    border-color: rgba(111, 82, 58, 0.55) !important;
+    box-shadow: 0 18px 50px rgba(31, 27, 22, 0.18) !important;
+}
+
+/* Formulario: inputs claros para que el texto no quede “oscuro sobre oscuro” */
+.form-group input,
+.form-group textarea {
+    background: rgba(255, 255, 255, 0.86) !important;
+    color: var(--light-color) !important;
+    border: 2px solid rgba(111, 82, 58, 0.22) !important;
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: rgba(111, 82, 58, 0.55) !important;
+    box-shadow: 0 0 0 4px rgba(176, 137, 104, 0.18) !important;
+    transform: none !important;
+}
+
+html[data-theme="gris"] .form-group input,
+html[data-theme="gris"] .form-group textarea {
+    border-color: rgba(0, 0, 0, 0.16) !important;
+}
+
+html[data-theme="gris"] .form-group input:focus,
+html[data-theme="gris"] .form-group textarea:focus {
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.14) !important;
+}
+
+/* Links de contacto: más legibles en tema claro */
+.contact-link {
+    color: #5a3f2b !important;
+}
+
+html[data-theme="gris"] .contact-link {
+    color: #2a2a2a !important;
+}
+
+/* Footer: fondo claro y textos oscuros (evita el tramo #1a0a1a) */
+footer {
+    background: var(--gradient-2) !important;
+    color: var(--light-color) !important;
+    border-top-color: rgba(111, 82, 58, 0.25) !important;
+}
+
+footer::before {
+    opacity: 0 !important;
+}
+
+.footer-links a {
+    color: rgba(31, 27, 22, 0.74) !important;
+}
+
+.footer-links a:hover {
+    color: rgba(31, 27, 22, 0.92) !important;
+    text-shadow: none !important;
+}
+
+.footer-links a::before {
+    color: rgba(111, 82, 58, 0.95) !important;
+    text-shadow: none !important;
+}
+
+.footer-bottom {
+    border-top-color: rgba(31, 27, 22, 0.12) !important;
+    color: rgba(31, 27, 22, 0.62) !important;
+}
+
+html[data-theme="gris"] .footer-links a {
+    color: rgba(26, 26, 26, 0.72) !important;
+}
+
+html[data-theme="gris"] .footer-bottom {
+    border-top-color: rgba(0, 0, 0, 0.12) !important;
+    color: rgba(26, 26, 26, 0.60) !important;
+}
+
+/* Menú móvil: en el CSS original es oscuro; aquí lo hacemos claro para que coincida */
+@media (max-width: 1024px) {
+    .nav-menu {
+        background: rgba(246, 240, 230, 0.98) !important;
+        border-left-color: rgba(111, 82, 58, 0.22) !important;
+        box-shadow: -8px 0 34px rgba(31, 27, 22, 0.12) !important;
+    }
+
+    html[data-theme="gris"] .nav-menu {
+        background: rgba(242, 242, 242, 0.98) !important;
+        border-left-color: rgba(0, 0, 0, 0.14) !important;
+        box-shadow: -8px 0 34px rgba(0, 0, 0, 0.10) !important;
+    }
+}
+
+/* Link específico del handle de Instagram en “Sobre mí” */
+.instagram-handle {
+    color: var(--primary-color) !important;
+    font-weight: 700;
+}
+
+.instagram-handle:hover {
+    color: var(--secondary-color) !important;
+}
+
 /* ===== Modales genéricos (galleryModal + carritoModal) ===== */
 .modal {
     position: fixed;
