@@ -1,0 +1,633 @@
+/* Minimal UI overrides
+   Cargado DESPUÉS de styles.min.css y tienda.css
+   Objetivo: estética limpia, sin neón/gradientes/animaciones.
+*/
+
+:root,
+html[data-theme="bn"],
+html[data-theme="beige"],
+html[data-theme="gris"] {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --text: #111111;
+  --muted: rgba(17, 17, 17, 0.70);
+  --border: rgba(17, 17, 17, 0.16);
+  --accent: #111111;
+  --accent-contrast: #ffffff;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow-min: 0 8px 24px rgba(28, 27, 26, 0.08);
+
+  /* Sobrescribe variables del tema original para neutralizar gradientes/neón */
+  --primary-color: var(--accent);
+  --secondary-color: var(--accent);
+  --accent-color: var(--surface);
+
+  --neon-pink: var(--accent);
+  --neon-purple: var(--accent);
+  --neon-blue: var(--accent);
+  --neon-green: var(--accent);
+
+  --gradient-1: none;
+  --gradient-2: none;
+  --gradient-3: none;
+  --gradient-4: none;
+  --gradient-5: none;
+  --gradient-hero: none;
+
+  --shadow: var(--shadow-min);
+  --shadow-colored: var(--shadow-min);
+  --shadow-neon: none;
+}
+
+html[data-theme="gris"] {
+  --bg: #f5f5f5;
+  --surface: #ffffff;
+  --text: #111111;
+  --muted: rgba(17, 17, 17, 0.70);
+  --border: rgba(17, 17, 17, 0.16);
+}
+
+body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+/* Enlaces más “editorial” y sobrios */
+a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(17, 17, 17, 0.28);
+}
+
+a:hover {
+  text-decoration-color: rgba(17, 17, 17, 0.55);
+}
+
+/* Quita fondos/ruido del tema original */
+body::before,
+body::after,
+.hero::before,
+.hero::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Reduce animaciones y transformaciones */
+*,
+*::before,
+*::after {
+  animation: none !important;
+}
+
+/* Mantén transiciones sutiles (minimal) */
+a,
+button,
+.btn,
+.nav-menu li a,
+.filter-btn {
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease !important;
+}
+
+/* Evita que el sitio “desaparezca” por las animaciones JS */
+.js .about-content,
+.js .about-section,
+.js .contact-content,
+.js .contact-section,
+.js .gallery-item,
+.js .gallery-section,
+.js .product-card,
+.js .service-card,
+.js .services-section {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Imágenes siempre visibles (minimal + evita flashes) */
+img {
+  opacity: 1 !important;
+  filter: grayscale(100%) contrast(1.06) !important;
+}
+
+/* Tipografía y títulos */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text) !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+.section-title {
+  background: none !important;
+  -webkit-text-fill-color: var(--text) !important;
+  color: var(--text) !important;
+  filter: none !important;
+  text-shadow: none !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 1rem !important;
+}
+
+.section-title::after {
+  display: none !important;
+}
+
+.section-subtitle {
+  color: var(--muted) !important;
+  margin-bottom: 2.5rem !important;
+}
+
+/* Navegación */
+.navbar {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(10px);
+}
+
+html[data-theme="gris"] .navbar {
+  background: rgba(243, 243, 243, 0.92) !important;
+}
+
+.navbar.scrolled {
+  box-shadow: none !important;
+}
+
+.nav-brand {
+  color: var(--text) !important;
+}
+
+.nav-brand i {
+  filter: none !important;
+  color: var(--text) !important;
+}
+
+.nav-menu li a {
+  color: var(--text) !important;
+  text-shadow: none !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.nav-menu li a::before {
+  display: none !important;
+}
+
+.nav-menu li a:hover {
+  background: rgba(17, 17, 17, 0.06) !important;
+  color: var(--text) !important;
+}
+
+.nav-menu li a.active {
+  background: rgba(17, 17, 17, 0.08) !important;
+  border: 1px solid rgba(17, 17, 17, 0.12) !important;
+  color: var(--text) !important;
+}
+
+/* Menú móvil (en el CSS original se vuelve oscuro) */
+@media (max-width: 1024px) {
+  .nav-menu {
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-left: 1px solid var(--border) !important;
+    box-shadow: none !important;
+  }
+
+  html[data-theme="gris"] .nav-menu {
+    background: rgba(243, 243, 243, 0.98) !important;
+  }
+}
+
+.nav-toggle span {
+  background: var(--text) !important;
+  box-shadow: none !important;
+}
+
+/* Hero */
+.hero {
+  background: none !important;
+  min-height: 78vh;
+  padding: 110px 20px 70px !important;
+}
+
+.hero-overlay {
+  display: none !important;
+}
+
+.hero h1 {
+  background: none !important;
+  -webkit-text-fill-color: var(--text) !important;
+  color: var(--text) !important;
+  text-shadow: none !important;
+}
+
+.hero p {
+  color: var(--muted) !important;
+}
+
+.scroll-indicator {
+  display: none !important;
+}
+
+/* Secciones: menos “impacto” */
+.about-section,
+.gallery-section,
+.services-section,
+.shop-section,
+.contact-section,
+.instagram-section {
+  padding: 80px 0 !important;
+  background: transparent !important;
+}
+
+/* Superficies/cards */
+.gallery-filters,
+.service-card,
+.product-card,
+.info-item,
+.contact-form,
+.instagram-embed-wrapper,
+.instagram-post-embed {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-image: none !important;
+  box-shadow: none !important;
+  border-radius: var(--radius) !important;
+}
+
+.gallery-item {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-image: none !important;
+  box-shadow: none !important;
+  border-radius: var(--radius) !important;
+  overflow: hidden;
+}
+
+.gallery-item::before,
+.gallery-item::after,
+.gallery-overlay {
+  display: none !important;
+}
+
+.gallery-item img {
+  filter: grayscale(100%) contrast(1.06) !important;
+  transform: none !important;
+}
+
+/* Quita “hover 3D” */
+.gallery-item,
+.product-card,
+.service-card,
+.info-item,
+.social-icon {
+  transform: none !important;
+}
+
+.gallery-item:hover,
+.product-card:hover,
+.service-card:hover,
+.info-item:hover,
+.social-icon:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Filtros galería */
+.gallery-filters {
+  padding: 16px !important;
+  border-radius: 999px !important;
+}
+
+.filter-btn {
+  background: transparent !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  border-radius: 999px !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  box-shadow: none !important;
+}
+
+.filter-btn::before {
+  display: none !important;
+}
+
+.filter-btn:hover {
+  background: rgba(17, 17, 17, 0.06) !important;
+}
+
+.filter-btn.active {
+  background: var(--accent) !important;
+  color: var(--accent-contrast) !important;
+  border-color: var(--accent) !important;
+  text-shadow: none !important;
+}
+
+/* Botones */
+.btn,
+.btn-primary,
+.btn-tienda,
+.carrito-icon {
+  background: var(--accent) !important;
+  color: var(--accent-contrast) !important;
+  border: 1px solid var(--accent) !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.btn-outline {
+  background: transparent !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.btn-outline:hover {
+  background: rgba(17, 17, 17, 0.06) !important;
+}
+
+.btn::before,
+.btn-tienda::before,
+.carrito-icon::before {
+  display: none !important;
+}
+
+.btn:hover,
+.btn-tienda:hover,
+.carrito-icon:hover {
+  opacity: 0.92;
+}
+
+.btn-instagram {
+  background: var(--accent) !important;
+  box-shadow: none !important;
+}
+
+#carritoCount {
+  background: rgba(255, 255, 255, 0.22) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+/* Scroll to top */
+.scroll-to-top {
+  background: var(--accent) !important;
+  border: 1px solid var(--accent) !important;
+  box-shadow: none !important;
+}
+
+/* Footer */
+footer {
+  background: transparent !important;
+  border-top: 1px solid var(--border) !important;
+  color: var(--muted) !important;
+}
+
+/* Badges / etiquetas */
+.contact-badge,
+.tienda-badge,
+.producto-tag,
+.producto-badge {
+  background: rgba(17, 17, 17, 0.08) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+/* Íconos circulares (servicios/contacto/redes) */
+.service-icon,
+.info-icon {
+  background: rgba(17, 17, 17, 0.06) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
+.service-icon i,
+.info-item i,
+.social-icon i {
+  color: var(--text) !important;
+  filter: none !important;
+}
+
+/* Redes sociales (bloques) */
+.social-links-enhanced,
+.social-icon {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
+.social-icon span {
+  color: var(--muted) !important;
+}
+
+.social-icon:hover span {
+  color: var(--text) !important;
+  text-shadow: none !important;
+}
+
+.social-whatsapp i {
+  color: var(--text) !important;
+}
+
+/* Modales (carrito/checkout/confirm/galería) y Tienda */
+.modal {
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(6px);
+}
+
+.modal-close,
+.tienda-close {
+  background: rgba(17, 17, 17, 0.06) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.modal-close:hover,
+.tienda-close:hover {
+  background: rgba(17, 17, 17, 0.10) !important;
+}
+
+.carrito-modal-box,
+.checkout-modal-box,
+.confirm-modal-box,
+#galleryModal .modal-content,
+.tienda-panel {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
+.tienda-panel::before {
+  display: none !important;
+}
+
+.carrito-modal-box h3,
+.checkout-modal-box h3,
+.confirm-modal-box h3,
+.tienda-header h2 {
+  color: var(--text) !important;
+}
+
+.carrito-item,
+.checkout-item,
+.paypal-missing,
+.checkout-fieldset {
+  background: rgba(17, 17, 17, 0.04) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+.carrito-item p,
+.carrito-linea,
+.carrito-nota,
+.paypal-hint,
+.checkout-kicker,
+.confirm-kicker,
+.tienda-kicker,
+.confirm-hint,
+#pickupAddress {
+  color: var(--muted) !important;
+}
+
+.cantidad-btn,
+.btn-remove,
+.item-eliminar {
+  background: rgba(17, 17, 17, 0.06) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+.cantidad-btn:hover,
+.btn-remove:hover,
+.item-eliminar:hover {
+  background: rgba(17, 17, 17, 0.10) !important;
+}
+
+.cantidad-num {
+  color: var(--text) !important;
+}
+
+.checkout-form input,
+.checkout-form textarea,
+.form-group input,
+.form-group textarea {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
+.checkout-form label > span {
+  color: var(--muted) !important;
+}
+
+.checkout-form input:focus,
+.checkout-form textarea:focus,
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: rgba(17, 17, 17, 0.30) !important;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.08) !important;
+}
+
+.tienda-header,
+.tienda-hero {
+  background: rgba(17, 17, 17, 0.03) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
+.categoria-btn {
+  background: transparent !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+.categoria-btn.active {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent-contrast) !important;
+}
+
+.producto-card-modern {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
+.producto-card-modern:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.producto-thumb::after {
+  display: none !important;
+}
+
+.producto-thumb img {
+  filter: grayscale(100%) contrast(1.06) !important;
+  transform: none !important;
+}
+
+footer::before {
+  display: none !important;
+}
+
+.footer-section h3 {
+  color: var(--text) !important;
+}
+
+.footer-links a {
+  color: var(--muted) !important;
+  padding-left: 0 !important;
+}
+
+.footer-links a::before {
+  display: none !important;
+}
+
+.footer-links a:hover {
+  color: var(--text) !important;
+  transform: none !important;
+  text-shadow: none !important;
+}
+
+/* Scrollbar simple */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(17, 17, 17, 0.20);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  box-shadow: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(17, 17, 17, 0.28);
+  background-clip: content-box;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 72vh;
+    padding-top: 95px !important;
+  }
+
+  .about-section,
+  .gallery-section,
+  .services-section,
+  .shop-section,
+  .contact-section,
+  .instagram-section {
+    padding: 64px 0 !important;
+  }
+}
